@@ -12,15 +12,19 @@
       
 
       <!-- Complaint Text -->
-
+ <div class="mb-3">
+          <div class="form-group">
+                        <label for="File name">File name</label>
+                        <input type="text" class="form-control" id="File name" name="File name" placeholder="" required>
+                    </div>
       <div class="mb-3">
         <label for="send" class="form-label">Evidence Type</label>
-        <select class="form-control" id="send" name="send" rows="4" placeholder="" required>
-            <option>weapons</option>
-              <option>bloodstains</option>
-              <option>fibre</option>
-              <option>hair</option>
-              <option>soil</option>
+        <select class="form-control" id="send" name="evidencetype" rows="4" placeholder="" required>
+            <option>Weapons</option>
+              <option>Bloodstains</option>
+              <option>Fibre</option>
+              <option>Hair</option>
+              <option>Soil</option>
 
 
         </select>
@@ -30,16 +34,16 @@
                         <input type="text" class="form-control" id="Description" name="Description" placeholder="" required>
                     </div>
                      <div class="form-group">
-                        <label for="Collection Location">Collection Location</label>
+                        <label for="Collection Location">Collection_Location</label>
                         <input type="text" class="form-control" id="Collection Location" name="Collection Location" placeholder="" required>
                     </div>
          <div class="form-group">
-                        <label for="Collected Date">Collected Date</label>
-                        <input type="" class="form-control" id="Collected Date" name="Collected Date" placeholder="" required>
+                        <label for="Collected Date">Collected_Date</label>
+                        <input type="date" class="form-control" id="Collected Date" name="Collected Date" placeholder="" required>
                     </div>
         <div class="form-group">
-                        <label for="Collected Time">Collected Time</label>
-                        <input type="" class="form-control" id="Collected Time" name="Collected Time" placeholder="" required>
+                        <label for="Collected Time">Collected_Time</label>
+                        <input type="time" class="form-control" id="Collected Time" name="Collected Time" placeholder="" required>
                     </div>
         <div class="form-group">
                         <label for="Digital Hash">Digital Hash</label>

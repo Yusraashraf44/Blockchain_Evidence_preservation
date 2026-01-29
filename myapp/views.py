@@ -123,9 +123,9 @@ def viewprofile_get(request):
 def add_audiovisualevidence_get(request):
     return render(request,'users/add_audiovisualevidence.html')
 def add_audiovisualevidence_post(request):
+    Filename=request.FILES["File name"]
     mediaType= request.POST["media Type"]
     duration_seconds= request.POST["duration_seconds"]
-    file= request.FILES["file"]
     format = request.POST["format"]
     Collectedfrom = request.POST["Collected from"]
     Collectedat = request.POST["Collected at"]
@@ -136,41 +136,99 @@ def add_audiovisualevidence_post(request):
 def add_biologicalevidence_get(request):
     return render(request,'users/add_biologicalevidence.html')
 def add_biologicalevidence_post(request):
+    Filename = request.FILES["File name"]
+    evidence=request.POST["Evidence"]
+    Source = request.POST["Source"]
+    CollectionLocation=request.POST["Collection Location"]
+    CollectedDate=request.POST["Collected Date"]
+    CollectedTime=request.POST["Collected Time"]
+    Labrefernceid=request.POST["Lab refernce id"]
+    narration=request.POST["narration"]
+
     return render(request,'users/add_biologicalevidence.html')
 
 def add_chemicalevidence_get(request):
     return render(request,'users/add_chemicalevidence.html')
 def add_chemicalevidence_post(request):
+    Filename = request.FILES["File name"]
+    SubstanceType = request.POST["Substance Type"]
+    quantity = request.POST["quantity"]
+    Collectedfrom = request.POST["Collected from"]
+    Collectedat = request.POST["Collected at"]
+    lab_reference_id = request.POST["lab_reference_id"]
+    digitalhash = request.POST["digital hash"]
+
     return render(request,'users/add_chemicalevidence.html')
 
 def add_digitalevidence_get(request):
     return render(request,'users/add_digitalevidence.html')
 def add_digitalevidence_post(request):
+    Filename = request.FILES["File name"]
+    FileType = request.POST["File Type"]
+    Filesize = request.POST["File size"]
+    Hashvalue = request.POST["Hash value"]
+    Collectedsource = request.POST["Collected source"]
+    CollectedTime = request.POST["Collected Time"]
+    PreservationTime = request.POST["Preservation Time"]
     return render(request,'users/add_digitalevidence.html')
 
 def add_documentevidence_get(request):
     return render(request,'users/add_documentevidence.html')
 def add_documentevidence_post(request):
+    Filename = request.FILES["File name"]
+    DocumentType = request.POST["Document Type"]
+    Title = request.POST["Title"]
+    Pages = request.POST["Pages"]
+    Collectedfrom = request.POST["Collected from"]
+    Collectedat = request.POST["Collected at"]
+    filehash = request.POST["file hash"]
     return render(request,'users/add_documentevidence.html')
 
 def add_financialaccountingevidence_get(request):
     return render(request,'users/add_financialaccountingevidence.html')
 def add_financialaccountingevidence_post(request):
+    Filename = request.FILES["File name"]
+    TransactionType = request.POST["Transaction Type"]
+    reference_number = request.POST["reference_number"]
+    amount = request.POST["amount"]
+    Collectedfrom = request.POST["Collected from"]
+    Collectedat = request.POST["Collected at"]
+    digitalhash = request.POST["digital hash"]
     return render(request,'users/add_financialaccountingevidence.html')
 
 def add_patternevidence_get(request):
     return render(request,'users/add_patternevidence.html')
 def add_patternevidence_post(request):
+    Filename = request.FILES["File name"]
+    PatternType = request.POST["Pattern Type"]
+    capturemethod = request.POST["capture method"]
+    Collectedfrom = request.POST["Collected from"]
+    Collectedat = request.POST["Collected at"]
+    filehash = request.POST["file hash"]
     return render(request,'users/add_patternevidence.html')
 
 def add_physicalevidence_get(request):
     return render(request,'users/add_physicalevidence.html')
 def add_physicalevidence_post(request):
+    Filename = request.FILES["File name"]
+    evidencetype = request.POST["evidencetype"]
+    Description = request.POST["Description"]
+    CollectionLocation = request.POST["Collection Location"]
+    CollectedDate = request.POST["Collected Date"]
+    CollectedTime = request.POST["Collected Time"]
+    digitalhash = request.POST["digital hash"]
     return render(request,'users/add_physicalevidence.html')
 
 def add_traceevidence_get(request):
     return render(request,'users/add_traceevidence.html')
 def add_traceevidence_post(request):
+    Filename = request.FILES["File name"]
+    TraceType = request.POST["Trace Type"]
+    Description = request.POST["Description"]
+    Collectedfrom = request.POST["Collected from"]
+    Collectedat = request.POST["Collected at"]
+    storagelocation = request.POST["storage location"]
+    digitalhash = request.POST["digital hash"]
     return render(request,'users/add_traceevidence.html')
 
 
