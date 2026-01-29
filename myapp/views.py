@@ -6,6 +6,9 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from myapp.models import Complaint, Users
+
+
 def login_get(request):
     return render(request,'login1.html')
 def login_post(request):
@@ -35,13 +38,15 @@ def adminhome_get(request):
 # def loginindex
 
 def viewcomplaint_get(request):
-    return render(request,'admins/viewcomplaint.html')
+    data=Complaint.objects.all()
+    return render(request,'admins/viewcomplaint.html',{'data':data})
 
 def viewevidence_get(request):
     return render(request,'admins/viewevidence.html')
 
 def viewuser_get(request):
-    return render(request,'admins/viewuser.html')
+    users=Users.objects.all()
+    return render(request,'admins/viewuser.html',{'data':users})
 
 def changepassword_get(request):
     return render(request,'admins/changepassword.html')
@@ -67,14 +72,19 @@ def changepassword_post(request):
 
 
 
-    return render(request,'admins/changepassword.html')
 
 
-def sentreply_get(request):
-    return render(request,'admins/sentreply.html')
+def sentreply_get(request,id):
+    return render(request,'admins/sentreply.html',{'id':id})
 
 def sentreply_post(request):
-    return render(request,'admins/sentreply.html')
+    reply=request.POST['reply']
+    id=request.POST['id']
+    c=Complaint.objects.get(id=id)
+    c.reply=reply
+    c.status='replied'
+    c.save()
+    return redirect('myapp/viewcomplaint_get/')
 
 # USERS
 
@@ -109,6 +119,64 @@ def user_viewcomplaint_get(request):
 
 def viewprofile_get(request):
     return render(request,'users/viewprofile.html')
+
+def add_audiovisualevidence_get(request):
+    return render(request,'users/add_audiovisualevidence.html')
+def add_audiovisualevidence_post(request):
+    mediaType= request.POST["media Type"]
+    duration_seconds= request.POST["duration_seconds"]
+    file= request.FILES["file"]
+    format = request.POST["format"]
+    Collectedfrom = request.POST["Collected from"]
+    Collectedat = request.POST["Collected at"]
+    filehash = request.POST["file hash"]
+
+    return render(request,'users/add_audiovisualevidence.html')
+
+def add_biologicalevidence_get(request):
+    return render(request,'users/add_biologicalevidence.html')
+def add_biologicalevidence_post(request):
+    return render(request,'users/add_biologicalevidence.html')
+
+def add_chemicalevidence_get(request):
+    return render(request,'users/add_chemicalevidence.html')
+def add_chemicalevidence_post(request):
+    return render(request,'users/add_chemicalevidence.html')
+
+def add_digitalevidence_get(request):
+    return render(request,'users/add_digitalevidence.html')
+def add_digitalevidence_post(request):
+    return render(request,'users/add_digitalevidence.html')
+
+def add_documentevidence_get(request):
+    return render(request,'users/add_documentevidence.html')
+def add_documentevidence_post(request):
+    return render(request,'users/add_documentevidence.html')
+
+def add_financialaccountingevidence_get(request):
+    return render(request,'users/add_financialaccountingevidence.html')
+def add_financialaccountingevidence_post(request):
+    return render(request,'users/add_financialaccountingevidence.html')
+
+def add_patternevidence_get(request):
+    return render(request,'users/add_patternevidence.html')
+def add_patternevidence_post(request):
+    return render(request,'users/add_patternevidence.html')
+
+def add_physicalevidence_get(request):
+    return render(request,'users/add_physicalevidence.html')
+def add_physicalevidence_post(request):
+    return render(request,'users/add_physicalevidence.html')
+
+def add_traceevidence_get(request):
+    return render(request,'users/add_traceevidence.html')
+def add_traceevidence_post(request):
+    return render(request,'users/add_traceevidence.html')
+
+
+
+
+
 
 
 

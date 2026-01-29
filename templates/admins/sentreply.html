@@ -8,8 +8,8 @@
 <body>
   <div class="container mt-5">
     <h4 class="mb-4">Send Reply</h4>
-    <form>
-      
+    <form method="post" action="/myapp/sentreply_post/">
+        {% csrf_token %}
 
       <!-- Complaint Text -->
       <div class="mb-3">

@@ -10,7 +10,7 @@ class Users(models.Model):
     gender = models.CharField(max_length=100)
     dob = models.DateField()
     photo = models.CharField(max_length=100)
-    place = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
     AUTHUSER=models.OneToOneField(User,on_delete=models.CASCADE)
 
 class Complaint(models.Model):
@@ -20,5 +20,11 @@ class Complaint(models.Model):
     status = models.CharField(max_length=100)
     USER=models.ForeignKey(Users,on_delete=models.CASCADE)
 
+
+class Case(models.Model):
+    case_number=models.CharField(max_length=50)
+    title=models.CharField(max_length=100)
+    description=models.CharField(max_length=200)
+    date
 
 
