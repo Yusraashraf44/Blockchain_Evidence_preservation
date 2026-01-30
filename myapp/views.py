@@ -1,7 +1,9 @@
+import datetime
 from email import message
-
+from django.contrib.auth.models import User,Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
 
@@ -21,6 +23,8 @@ def login_post(request):
         login(request,user)
         if user.groups.filter(name='admin'):
             return redirect('/myapp/adminhome_get/')
+        elif user.groups.filter(name='user'):
+            return redirect('/myapp/userindex_get/')
         else:
             messages.error(request,'error')
             return redirect('/myapp/login_get/')
@@ -86,8 +90,85 @@ def sentreply_post(request):
     c.save()
     return redirect('myapp/viewcomplaint_get/')
 
-# USERS
+def addstaff_get(request):
+    return render(request,'admins/addstaff.html')
+def addstaff_post(request):
+    name=request.POST['name']
+    gender=request.POST['gender']
+    dob = request.POST['dob']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    photo = request.FILES['photo']
+    f=FileSystemStorage()
+    date=datetime.datetime.now().strftime('%d%M%Y%H%M%S')+'.jpg'
+    f.save(date,photo)
+    path=f.url(date)
 
+
+    a=User.objects.create_user(username=email,password=phone)
+    a.groups.add(Group.objects.get(name='user'))
+    a.save()
+
+    u=Users()
+    u.name=name
+    u.gender=gender
+    u.dob=dob
+    u.email=email
+    u.phone=phone
+    u.AUTHUSER=a
+    u.photo=path
+    u.save()
+
+    return redirect('/myapp/viewuser_get/')
+
+
+def editstaff_get(request,id):
+    a=Users.objects.get(id=id)
+    return render(request, 'admins/editstaff.html',{'d':a})
+
+
+def editstaff_post(request):
+    name = request.POST['name']
+    gender = request.POST['gender']
+    dob = request.POST['dob']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    id = request.POST['id']
+    u = Users.objects.get(id=id)
+    k=u.AUTHUSER
+    k.username=email
+    k.save()
+
+
+    if 'photo' in request.FILES:
+        photo = request.FILES['photo']
+        f = FileSystemStorage()
+        date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+        f.save(date, photo)
+        path = f.url(date)
+        u.photo = path
+        u.save()
+
+
+    u.name = name
+    u.gender = gender
+    u.dob = dob
+    u.email = email
+    u.phone = phone
+    u.AUTHUSER = k
+    u.save()
+
+    return redirect('/myapp/viewuser_get/')
+
+def deletestaff_get(request,id):
+    Users.objects.get(AUTHUSER_id=id).delete()
+    User.objects.get(id=id).delete()
+    return redirect('/myapp/viewuser_get/')
+
+
+# USERS
+def userindex_get(request):
+    return render(request,'users/userindex.html')
 def edit_get(request):
     return render(request,'users/edit.html')
 

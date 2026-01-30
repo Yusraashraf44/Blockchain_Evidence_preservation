@@ -41,6 +41,32 @@ urlpatterns = [
     path('sentcomplaint_post/', views.sentcomplaint_post),
     path('user_viewcomplaint_get/', views.user_viewcomplaint_get),
     path('viewprofile_get/', views.viewprofile_get),
+    path('add_audiovisualevidence_get/',views.add_audiovisualevidence_get),
+    path('add_audiovisualevidence_post/',views.add_audiovisualevidence_post),
+    path('add_biologicalevidence_get/',views.add_biologicalevidence_get),
+    path('add_biologicalevidence_post/',views.add_biologicalevidence_post),
+    path('add_chemicalevidence_get/',views.add_chemicalevidence_get),
+    path('add_chemicalevidence_post/',views.add_chemicalevidence_post),
+    path('add_digitalevidence_get/',views.add_digitalevidence_get),
+    path('add_digitalevidence_post/',views.add_digitalevidence_post),
+    path('add_documentevidence_get/',views.add_documentevidence_get),
+    path('add_documentevidence_post/',views.add_documentevidence_post),
+    path('add_financialaccountingevidence_get/',views.add_financialaccountingevidence_get),
+    path('add_financialaccountingevidence_post/',views.add_financialaccountingevidence_post),
+    path('add_patternevidence_get/',views.add_patternevidence_get),
+    path('add_patternevidence_post/',views.add_patternevidence_post),
+    path('add_physicalevidence_get/',views.add_physicalevidence_get),
+    path('add_physicalevidence_post/',views.add_physicalevidence_post),
+    path('add_traceevidence_get/',views.add_traceevidence_get),
+    path('add_traceevidence_post/',views.add_traceevidence_post),
+    path('addstaff_get/',views.addstaff_get),
+    path('addstaff_post/',views.addstaff_post),
+    path('editstaff_get/<id>',views.editstaff_get),
+    path('editstaff_post/',views.editstaff_post),
+    path('deletestaff_get/<id>',views.deletestaff_get),
+
+
+
 
 
 ]

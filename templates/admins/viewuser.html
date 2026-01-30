@@ -20,7 +20,7 @@
           <th>DOB</th>
           <th>Email</th>
           <th>Phone</th>
-          <th>Place</th>
+
           <th>Photo</th>
             <th>Action</th>
         </tr>
@@ -35,9 +35,14 @@
           <td>{{ i.dob }}</td>
           <td>{{ i.email }}</td>
           <td>{{ i.phone }}</td>
-          <td>{{ i.place }}</td>
+
              <td><img src="{{ i.photo }}" class="img-thumbnail" width="50" /></td>
-            <td><a href="" class="btn btn-danger">Block</a></td>
+            <td>
+
+                <a href="/myapp/editstaff_get/{{ i.id }}" class="btn btn-danger">Edit</a>
+                <a href="/myapp/deletestaff_get/{{ i.AUTHUSER.id }}" class="btn btn-danger">Delete</a>
+
+            </td>
 
         </tr>
                {% endfor %}
