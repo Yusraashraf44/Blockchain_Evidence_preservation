@@ -1,5 +1,7 @@
 import datetime
 from email import message
+from unittest import case
+
 from django.contrib.auth.models import User,Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -8,7 +10,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from myapp.models import Complaint, Users
+from myapp.models import Complaint, Users, Case
 
 
 def login_get(request):
@@ -48,9 +50,6 @@ def viewcomplaint_get(request):
 def viewevidence_get(request):
     return render(request,'admins/viewevidence.html')
 
-def viewuser_get(request):
-    users=Users.objects.all()
-    return render(request,'admins/viewuser.html',{'data':users})
 
 def changepassword_get(request):
     return render(request,'admins/changepassword.html')
@@ -122,6 +121,10 @@ def addstaff_post(request):
     return redirect('/myapp/viewuser_get/')
 
 
+def viewuser_get(request):
+    users=Users.objects.all()
+    return render(request,'admins/viewuser.html',{'data':users})
+
 def editstaff_get(request,id):
     a=Users.objects.get(id=id)
     return render(request, 'admins/editstaff.html',{'d':a})
@@ -164,6 +167,124 @@ def deletestaff_get(request,id):
     Users.objects.get(AUTHUSER_id=id).delete()
     User.objects.get(id=id).delete()
     return redirect('/myapp/viewuser_get/')
+
+def addcase_get(request):
+    return render(request, 'admins/addcase.html')
+def addcase_post(request):
+    case_number = request.POST['case_number']
+    case_title = request.POST['case_title']
+    case_type = request.POST['case_type']
+    date_of_incident = request.POST['date_of_incident']
+    case_description = request.POST['case_description']
+    date_filed = request.POST['date_filed']
+    petitioner_name = request.POST['petitioner_name']
+    petitioner_email = request.POST['petitioner_email']
+    petitioner_phone = request.POST['petitioner_phone']
+    petitioner_place = request.POST['petitioner_place']
+    petitioner_pincode = request.POST['petitioner_pincode']
+    petitioner_district = request.POST['petitioner_district']
+    petitioner_state = request.POST['petitioner_state']
+    accused = request.POST['accused']
+    filing_mode = request.POST['filing_mode']
+    court_name = request.POST['court_name']
+    judge_assigned = request.POST['judge_assigned']
+
+    priority = request.POST['priority']
+    remarks = request.POST['remarks']
+    case_duration_days = request.POST['case_duration_days']
+
+    c=Case()
+    c.case_number=case_number
+    c.case_title=case_title
+    c.case_type=case_type
+    c.date_of_incident=date_of_incident
+    c.case_description=case_description
+    c.date_filed=date_filed
+    c.petitioner_name=petitioner_name
+    c.petitioner_email=petitioner_email
+    c.petitioner_phone=petitioner_phone
+    c.petitioner_place=petitioner_place
+    c.petitioner_pincode=petitioner_pincode
+    c.petitioner_district=petitioner_district
+    c.petitioner_state=petitioner_state
+    c.accused=accused
+    c.filing_mode=filing_mode
+    c.court_name=court_name
+    c.judge_assigned=judge_assigned
+    c.priority=priority
+    c.remarks=remarks
+    c.case_duration_days=case_duration_days
+    c.save()
+    return redirect('/myapp/viewcase_get/')
+
+
+def viewcase_get(request):
+    cases=Case.objects.all()
+    return render(request,'admins/viewcase.html',{'data':cases})
+
+def editcase_get(request,id):
+    f=Case.objects.get(id=id)
+    return render(request, 'admins/editcase.html',{'d':f})
+
+def editcase_post(request):
+    case_number = request.POST['case_number']
+    case_title = request.POST['case_title']
+    case_type = request.POST['case_type']
+    date_of_incident = request.POST['date_of_incident']
+    case_description = request.POST['case_description']
+    date_filed = request.POST['date_filed']
+    petitioner_name = request.POST['petitioner_name']
+    petitioner_email = request.POST['petitioner_email']
+    petitioner_phone = request.POST['petitioner_phone']
+    petitioner_place = request.POST['petitioner_place']
+    petitioner_pincode = request.POST['petitioner_pincode']
+    petitioner_district = request.POST['petitioner_district']
+    petitioner_state = request.POST['petitioner_state']
+    accused = request.POST['accused']
+    filing_mode = request.POST['filing_mode']
+    court_name = request.POST['court_name']
+    judge_assigned = request.POST['judge_assigned']
+    priority = request.POST['priority']
+    remarks = request.POST['remarks']
+    case_duration_days = request.POST['case_duration_days']
+    case_id = request.POST['id']
+    h = Case.objects.get(id=case_id)
+
+
+
+
+
+    h.case_number = case_number
+    h.case_title = case_title
+    h.case_type = case_type
+    h.date_of_incident = date_of_incident
+    h.case_description = case_description
+    h.date_filed = date_filed
+    h.petitioner_name = petitioner_name
+    h.petitioner_email = petitioner_email
+    h.petitioner_phone = petitioner_phone
+    h.petitioner_place = petitioner_place
+    h.petitioner_pincode = petitioner_pincode
+    h.petitioner_district = petitioner_district
+    h.petitioner_state = petitioner_state
+    h.court_name = court_name
+    h.accused = accused
+    h.filing_mode = filing_mode
+    h.judge_assigned = judge_assigned
+    h.priority = priority
+    h.remarks = remarks
+    h.case_duration_days = case_duration_days
+    h.save()
+
+
+
+    return redirect('/myapp/viewcase_get/')
+
+def deletecase_get(request,id):
+    Case.objects.get(id=id).delete()
+
+    return redirect('/myapp/viewcase_get/')
+
 
 
 # USERS

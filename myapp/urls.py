@@ -64,6 +64,13 @@ urlpatterns = [
     path('editstaff_get/<id>',views.editstaff_get),
     path('editstaff_post/',views.editstaff_post),
     path('deletestaff_get/<id>',views.deletestaff_get),
+    path('addcase_get/',views.addcase_get),
+    path('addcase_post/',views.addcase_post),
+    path('viewcase_get/',views.viewcase_get),
+    path('editcase_get/<id>',views.editcase_get),
+    path('editcase_post/',views.editcase_post),
+    path('deletecase_get/<id>',views.deletecase_get),
+
 
 
 
