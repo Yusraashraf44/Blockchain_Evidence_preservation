@@ -76,7 +76,6 @@ def changepassword_post(request):
 
 
 
-
 def sentreply_get(request,id):
     return render(request,'admins/sentreply.html',{'id':id})
 
@@ -275,8 +274,6 @@ def editcase_post(request):
     h.remarks = remarks
     h.case_duration_days = case_duration_days
     h.save()
-
-
 
     return redirect('/myapp/viewcase_get/')
 
