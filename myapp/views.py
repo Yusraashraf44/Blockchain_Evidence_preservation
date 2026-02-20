@@ -4,12 +4,13 @@ from unittest import case
 
 from django.contrib.auth.models import User,Group
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from myapp.blockchain import contract, w3
 from myapp.models import Complaint, Users, Case
 
 
@@ -35,6 +36,11 @@ def login_post(request):
         return redirect('/myapp/login_get/')
 
 
+def logout_get(request):
+    logout(request)
+    return redirect('/myapp/login_get/')
+
+
 
 # A D M I N ---------
 
@@ -48,6 +54,7 @@ def viewcomplaint_get(request):
     return render(request,'admins/viewcomplaint.html',{'data':data})
 
 def viewevidence_get(request):
+    # a=Evidence.objects.all()
     return render(request,'admins/viewevidence.html')
 
 
@@ -247,11 +254,8 @@ def editcase_post(request):
     remarks = request.POST['remarks']
     case_duration_days = request.POST['case_duration_days']
     case_id = request.POST['id']
+
     h = Case.objects.get(id=case_id)
-
-
-
-
 
     h.case_number = case_number
     h.case_title = case_title
@@ -321,113 +325,184 @@ def viewprofile_get(request):
 
 def add_audiovisualevidence_get(request):
     return render(request,'users/add_audiovisualevidence.html')
+
 def add_audiovisualevidence_post(request):
-    Filename=request.FILES["File name"]
-    mediaType= request.POST["media Type"]
+    file_name=request.FILES["File name"]
+    media_type= request.POST["media Type"]
     duration_seconds= request.POST["duration_seconds"]
     format = request.POST["format"]
-    Collectedfrom = request.POST["Collected from"]
-    Collectedat = request.POST["Collected at"]
-    filehash = request.POST["file hash"]
+    collected_from = request.POST["Collected from"]
+    collected_at = request.POST["Collected at"]
+    file_hash = request.POST["file hash"]
+
+    try:
+        tx_hash = contract.functions.addAudioevidence(file_name,media_type,duration_seconds,format,collected_from,collected_at,file_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
 
     return render(request,'users/add_audiovisualevidence.html')
 
 def add_biologicalevidence_get(request):
     return render(request,'users/add_biologicalevidence.html')
 def add_biologicalevidence_post(request):
-    Filename = request.FILES["File name"]
-    evidence=request.POST["Evidence"]
-    Source = request.POST["Source"]
-    CollectionLocation=request.POST["Collection Location"]
-    CollectedDate=request.POST["Collected Date"]
-    CollectedTime=request.POST["Collected Time"]
-    Labrefernceid=request.POST["Lab refernce id"]
+    file_name = request.FILES["File name"]
+    evidence_type=request.POST["Evidence"]
+    source = request.POST["Source"]
+    collection_location=request.POST["Collection Location"]
+    collected_date=request.POST["Collected Date"]
+    collected_time=request.POST["Collected Time"]
+    lab_referenceid=request.POST["Lab refernce id"]
     narration=request.POST["narration"]
+
+    try:
+        tx_hash = contract.functions.addBiologicalevidence(file_name,evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
 
     return render(request,'users/add_biologicalevidence.html')
 
 def add_chemicalevidence_get(request):
     return render(request,'users/add_chemicalevidence.html')
 def add_chemicalevidence_post(request):
-    Filename = request.FILES["File name"]
-    SubstanceType = request.POST["Substance Type"]
+    file_name = request.FILES["File name"]
+    substance_type = request.POST["Substance Type"]
     quantity = request.POST["quantity"]
-    Collectedfrom = request.POST["Collected from"]
-    Collectedat = request.POST["Collected at"]
-    lab_reference_id = request.POST["lab_reference_id"]
-    digitalhash = request.POST["digital hash"]
+    collected_from = request.POST["Collected from"]
+    collected_at = request.POST["Collected at"]
+    lab_refernceid = request.POST["lab_reference_id"]
+    digital_hash = request.POST["digital hash"]
+
+    try:
+        tx_hash = contract.functions.addChemicalevidence(file_name,substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
 
     return render(request,'users/add_chemicalevidence.html')
 
 def add_digitalevidence_get(request):
     return render(request,'users/add_digitalevidence.html')
 def add_digitalevidence_post(request):
-    Filename = request.FILES["File name"]
-    FileType = request.POST["File Type"]
-    Filesize = request.POST["File size"]
-    Hashvalue = request.POST["Hash value"]
-    Collectedsource = request.POST["Collected source"]
-    CollectedTime = request.POST["Collected Time"]
-    PreservationTime = request.POST["Preservation Time"]
+    file_name = request.FILES["File name"]
+    file_type = request.POST["File Type"]
+    file_size = request.POST["File size"]
+    hash_value = request.POST["Hash value"]
+    collected_source = request.POST["Collected source"]
+    collected_time = request.POST["Collected Time"]
+    preservation_time = request.POST["Preservation Time"]
+
+    try:
+        tx_hash = contract.functions.addDigitalevidence(file_name,file_type,file_size,hash_value,collected_source,collected_time,preservation_time,narration).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
     return render(request,'users/add_digitalevidence.html')
 
 def add_documentevidence_get(request):
     return render(request,'users/add_documentevidence.html')
 def add_documentevidence_post(request):
-    Filename = request.FILES["File name"]
-    DocumentType = request.POST["Document Type"]
-    Title = request.POST["Title"]
-    Pages = request.POST["Pages"]
-    Collectedfrom = request.POST["Collected from"]
-    Collectedat = request.POST["Collected at"]
-    filehash = request.POST["file hash"]
+    file_name = request.FILES["File name"]
+    document_type = request.POST["Document Type"]
+    title = request.POST["Title"]
+    pages = request.POST["Pages"]
+    collected_from = request.POST["Collected from"]
+    collected_at = request.POST["Collected at"]
+    file_hash = request.POST["file hash"]
+
+    try:
+        tx_hash = contract.functions.addDocumentevidence(file_name,document_type,title,pages,collected_from,collected_at,file_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
     return render(request,'users/add_documentevidence.html')
 
 def add_financialaccountingevidence_get(request):
     return render(request,'users/add_financialaccountingevidence.html')
 def add_financialaccountingevidence_post(request):
-    Filename = request.FILES["File name"]
-    TransactionType = request.POST["Transaction Type"]
+    file_name = request.FILES["File name"]
+    transaction_type = request.POST["Transaction Type"]
     reference_number = request.POST["reference_number"]
     amount = request.POST["amount"]
-    Collectedfrom = request.POST["Collected from"]
-    Collectedat = request.POST["Collected at"]
-    digitalhash = request.POST["digital hash"]
+    collected_from = request.POST["Collected from"]
+    collected_at = request.POST["Collected at"]
+    digital_hash = request.POST["digital hash"]
+
+    try:
+        tx_hash = contract.functions.addFinancialaccoundingevidence(file_name,transaction_type,reference_number,amount,collected_from,collected_at,digital_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
     return render(request,'users/add_financialaccountingevidence.html')
 
 def add_patternevidence_get(request):
     return render(request,'users/add_patternevidence.html')
 def add_patternevidence_post(request):
-    Filename = request.FILES["File name"]
-    PatternType = request.POST["Pattern Type"]
-    capturemethod = request.POST["capture method"]
-    Collectedfrom = request.POST["Collected from"]
-    Collectedat = request.POST["Collected at"]
-    filehash = request.POST["file hash"]
+    file_name = request.FILES["File name"]
+    pattern_type = request.POST["Pattern Type"]
+    capture_method = request.POST["capture method"]
+    collected_from = request.POST["Collected from"]
+    collected_at = request.POST["Collected at"]
+    file_hash = request.POST["file hash"]
+
+    try:
+        tx_hash = contract.functions.addPatternevidence(file_name,pattern_type,capture_method,collected_from,collected_at,file_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
     return render(request,'users/add_patternevidence.html')
 
 def add_physicalevidence_get(request):
     return render(request,'users/add_physicalevidence.html')
 def add_physicalevidence_post(request):
-    Filename = request.FILES["File name"]
-    evidencetype = request.POST["evidencetype"]
-    Description = request.POST["Description"]
-    CollectionLocation = request.POST["Collection Location"]
-    CollectedDate = request.POST["Collected Date"]
-    CollectedTime = request.POST["Collected Time"]
-    digitalhash = request.POST["digital hash"]
+    file_name = request.FILES["File name"]
+    evidence_type = request.POST["evidencetype"]
+    description = request.POST["Description"]
+    collection_location = request.POST["Collection Location"]
+    collected_date = request.POST["Collected Date"]
+    collected_time = request.POST["Collected Time"]
+    digital_hash = request.POST["digital hash"]
+
+    try:
+        tx_hash = contract.functions.addPhysicalevidence(file_name,evidence_type,description,collection_location,collected_date,collected_time,digital_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
     return render(request,'users/add_physicalevidence.html')
 
 def add_traceevidence_get(request):
     return render(request,'users/add_traceevidence.html')
 def add_traceevidence_post(request):
-    Filename = request.FILES["File name"]
-    TraceType = request.POST["Trace Type"]
-    Description = request.POST["Description"]
-    Collectedfrom = request.POST["Collected from"]
-    Collectedat = request.POST["Collected at"]
-    storagelocation = request.POST["storage location"]
-    digitalhash = request.POST["digital hash"]
+    file_name = request.FILES["File name"]
+    trace_type = request.POST["Trace Type"]
+    description = request.POST["Description"]
+    collected_from = request.POST["Collected from"]
+    collected_at = request.POST["Collected at"]
+    storage_location = request.POST["storage location"]
+    digital_hash = request.POST["digital hash"]
+
+    try:
+        tx_hash = contract.functions.addTraceevidence(file_name,trace_type,description,collected_from,collected_at,storage_location,digital_hash).transact()
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        message = "EvidenceRecords " + file_name + " added successfully."
+    except Exception as e:
+        message = "Error: " + str(e)
+
     return render(request,'users/add_traceevidence.html')
 
 

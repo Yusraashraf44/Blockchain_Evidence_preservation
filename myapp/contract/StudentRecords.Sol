@@ -1,0 +1,401 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EvidenceRecords {
+
+    /* ================= AUDIO EVIDENCE ================= */
+
+    struct Audioevidence {
+        string file_name;
+        string media_type;
+        string duration_seconds;
+        string format;
+        string collected_from;
+        string collected_at;
+        string file_hash;
+    }
+
+    mapping(uint256 => Audioevidence) private audioevidences;
+    uint256[] private audioevidenceIds;
+    uint256 private index_audioevidence = 0;
+
+    function addAudioevidence(
+        string memory file_name,
+        string memory media_type,
+        string memory duration_seconds,
+        string memory format,
+        string memory collected_from,
+        string memory collected_at,
+        string memory file_hash
+    ) public {
+        index_audioevidence++;
+        audioevidenceIds.push(index_audioevidence);
+        audioevidences[index_audioevidence] =
+            Audioevidence(file_name, media_type, duration_seconds, format, collected_from, collected_at, file_hash);
+    }
+
+    function getAudioevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Audioevidence memory e = audioevidences[id];
+        return (e.file_name,e.media_type,e.duration_seconds,e.format,e.collected_from,e.collected_at,e.file_hash);
+    }
+
+    function getAllAudioevidenceIds() public view returns (uint256[] memory) {
+        return audioevidenceIds;
+    }
+
+
+    /* ================= BIOLOGICAL EVIDENCE ================= */
+
+    struct Biologicalevidence {
+        string file_name;
+        string evidence_type;
+        string source;
+        string collection_location;
+        string collected_date;
+        string collected_time;
+        string lab_referenceid;
+        string narration;
+    }
+
+    mapping(uint256 => Biologicalevidence) private biologicalevidences;
+    uint256[] private biologicalevidenceIds;
+    uint256 private index_biologicalevidence = 0;
+
+    function addBiologicalevidence(
+        string memory file_name,
+        string memory evidence_type,
+        string memory source,
+        string memory collection_location,
+        string memory collected_date,
+        string memory collected_time,
+        string memory lab_referenceid,
+        string memory narration
+    ) public {
+        index_biologicalevidence++;
+        biologicalevidenceIds.push(index_biologicalevidence);
+        biologicalevidences[index_biologicalevidence] =
+            Biologicalevidence(file_name,evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration);
+    }
+
+    function getBiologicalevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Biologicalevidence memory e = biologicalevidences[id];
+        return (e.file_name,e.evidence_type,e.source,e.collection_location,e.collected_date,e.collected_time,e.lab_referenceid,e.narration);
+    }
+
+    function getAllBiologicalevidenceIds() public view returns (uint256[] memory) {
+        return biologicalevidenceIds;
+    }
+
+
+    /* ================= CHEMICAL EVIDENCE ================= */
+
+    struct Chemicalevidence {
+        string file_name;
+        string substance_type;
+        string quantity;
+        string collected_from;
+        string collected_at;
+        string lab_refernceid;
+        string digital_hash;
+    }
+
+    mapping(uint256 => Chemicalevidence) private chemicalevidences;
+    uint256[] private chemicalevidenceIds;
+    uint256 private index_chemicalevidence = 0;
+
+    function addChemicalevidence(
+        string memory file_name,
+        string memory substance_type,
+        string memory quantity,
+        string memory collected_from,
+        string memory collected_at,
+        string memory lab_refernceid,
+        string memory digital_hash
+    ) public {
+        index_chemicalevidence++;
+        chemicalevidenceIds.push(index_chemicalevidence);
+        chemicalevidences[index_chemicalevidence] =
+            Chemicalevidence(file_name,substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash);
+    }
+
+    function getChemicalevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Chemicalevidence memory e = chemicalevidences[id];
+        return (e.file_name,e.substance_type,e.quantity,e.collected_from,e.collected_at,e.lab_refernceid,e.digital_hash);
+    }
+
+    function getAllChemicalevidenceIds() public view returns (uint256[] memory) {
+        return chemicalevidenceIds;
+    }
+
+
+    /* ================= DIGITAL EVIDENCE ================= */
+
+    struct Digitalevidence {
+        string file_name;
+        string file_type;
+        string file_size;
+        string hash_value;
+        string collected_source;
+        string collected_time;
+        string preservation_time;
+    }
+
+    mapping(uint256 => Digitalevidence) private digitalevidences;
+    uint256[] private digitalevidenceIds;
+    uint256 private index_digitalevidence = 0;
+
+    function addDigitalevidence(
+        string memory file_name,
+        string memory file_type,
+        string memory file_size,
+        string memory hash_value,
+        string memory collected_source,
+        string memory collected_time,
+        string memory preservation_time
+    ) public {
+        index_digitalevidence++;
+        digitalevidenceIds.push(index_digitalevidence);
+        digitalevidences[index_digitalevidence] =
+            Digitalevidence(file_name,file_type,file_size,hash_value,collected_source,collected_time,preservation_time);
+    }
+
+    function getDigitalevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Digitalevidence memory e = digitalevidences[id];
+        return (e.file_name,e.file_type,e.file_size,e.hash_value,e.collected_source,e.collected_time,e.preservation_time);
+    }
+
+    function getAllDigitalevidenceIds() public view returns (uint256[] memory) {
+        return digitalevidenceIds;
+    }
+
+
+    /* ================= DOCUMENT EVIDENCE ================= */
+
+    struct Documentevidence {
+        string file_name;
+        string document_type;
+        string title;
+        string pages;
+        string collected_from;
+        string collected_at;
+        string file_hash;
+    }
+
+    mapping(uint256 => Documentevidence) private documentevidences;
+    uint256[] private documentevidenceIds;
+    uint256 private index_documentevidence = 0;
+
+    function addDocumentevidence(
+        string memory file_name,
+        string memory document_type,
+        string memory title,
+        string memory pages,
+        string memory collected_from,
+        string memory collected_at,
+        string memory file_hash
+    ) public {
+        index_documentevidence++;
+        documentevidenceIds.push(index_documentevidence);
+        documentevidences[index_documentevidence] =
+            Documentevidence(file_name,document_type,title,pages,collected_from,collected_at,file_hash);
+    }
+
+    function getDocumentevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Documentevidence memory e = documentevidences[id];
+        return (e.file_name,e.document_type,e.title,e.pages,e.collected_from,e.collected_at,e.file_hash);
+    }
+
+    function getAllDocumentevidenceIds() public view returns (uint256[] memory) {
+        return documentevidenceIds;
+    }
+
+
+    /* ================= FINANCIAL ACCOUNTING EVIDENCE ================= */
+
+    struct Financialaccoundingevidence {
+        string file_name;
+        string transaction_type;
+        string reference_number;
+        string amount;
+        string collected_from;
+        string collected_at;
+        string digital_hash;
+    }
+
+    mapping(uint256 => Financialaccoundingevidence) private financialaccoundingevidences;
+    uint256[] private financialaccoundingevidenceIds;
+    uint256 private index_financialaccoundingevidence = 0;
+
+    function addFinancialaccoundingevidence(
+        string memory file_name,
+        string memory transaction_type,
+        string memory reference_number,
+        string memory amount,
+        string memory collected_from,
+        string memory collected_at,
+        string memory digital_hash
+    ) public {
+        index_financialaccoundingevidence++;
+        financialaccoundingevidenceIds.push(index_financialaccoundingevidence);
+        financialaccoundingevidences[index_financialaccoundingevidence] =
+            Financialaccoundingevidence(file_name,transaction_type,reference_number,amount,collected_from,collected_at,digital_hash);
+    }
+
+    function getFinancialaccoundingevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Financialaccoundingevidence memory e = financialaccoundingevidences[id];
+        return (e.file_name,e.transaction_type,e.reference_number,e.amount,e.collected_from,e.collected_at,e.digital_hash);
+    }
+
+    function getAllFinancialaccoundingevidenceIds() public view returns (uint256[] memory) {
+        return financialaccoundingevidenceIds;
+    }
+
+
+    /* ================= PATTERN EVIDENCE ================= */
+
+    struct Patternevidence {
+        string file_name;
+        string pattern_type;
+        string capture_method;
+        string collected_from;
+        string collected_at;
+        string file_hash;
+    }
+
+    mapping(uint256 => Patternevidence) private patternevidences;
+    uint256[] private patternevidenceIds;
+    uint256 private index_patternevidence = 0;
+
+    function addPatternevidence(
+        string memory file_name,
+        string memory pattern_type,
+        string memory capture_method,
+        string memory collected_from,
+        string memory collected_at,
+        string memory file_hash
+    ) public {
+        index_patternevidence++;
+        patternevidenceIds.push(index_patternevidence);
+        patternevidences[index_patternevidence] =
+            Patternevidence(file_name,pattern_type,capture_method,collected_from,collected_at,file_hash);
+    }
+
+    function getPatternevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Patternevidence memory e = patternevidences[id];
+        return (e.file_name,e.pattern_type,e.capture_method,e.collected_from,e.collected_at,e.file_hash);
+    }
+
+    function getAllPatternevidenceIds() public view returns (uint256[] memory) {
+        return patternevidenceIds;
+    }
+
+
+    /* ================= PHYSICAL EVIDENCE ================= */
+
+    struct Physicalevidence {
+        string file_name;
+        string evidence_type;
+        string description;
+        string collection_location;
+        string collected_date;
+        string collected_time;
+        string digital_hash;
+    }
+
+    mapping(uint256 => Physicalevidence) private physicalevidences;
+    uint256[] private physicalevidenceIds;
+    uint256 private index_physicalevidence = 0;
+
+    function addPhysicalevidence(
+        string memory file_name,
+        string memory evidence_type,
+        string memory description,
+        string memory collection_location,
+        string memory collected_date,
+        string memory collected_time,
+        string memory digital_hash
+    ) public {
+        index_physicalevidence++;
+        physicalevidenceIds.push(index_physicalevidence);
+        physicalevidences[index_physicalevidence] =
+            Physicalevidence(file_name,evidence_type,description,collection_location,collected_date,collected_time,digital_hash);
+    }
+
+    function getPhysicalevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Physicalevidence memory e = physicalevidences[id];
+        return (e.file_name,e.evidence_type,e.description,e.collection_location,e.collected_date,e.collected_time,e.digital_hash);
+    }
+
+    function getAllPhysicalevidenceIds() public view returns (uint256[] memory) {
+        return physicalevidenceIds;
+    }
+
+
+    /* ================= TRACE EVIDENCE ================= */
+
+    struct Traceevidence {
+        string file_name;
+        string trace_type;
+        string description;
+        string collected_from;
+        string collected_at;
+        string storage_location;
+        string digital_hash;
+    }
+
+    mapping(uint256 => Traceevidence) private traceevidences;
+    uint256[] private traceevidenceIds;
+    uint256 private index_traceevidence = 0;
+
+    function addTraceevidence(
+        string memory file_name,
+        string memory trace_type,
+        string memory description,
+        string memory collected_from,
+        string memory collected_at,
+        string memory storage_location,
+        string memory digital_hash
+    ) public {
+        index_traceevidence++;
+        traceevidenceIds.push(index_traceevidence);
+        traceevidences[index_traceevidence] =
+            Traceevidence(file_name,trace_type,description,collected_from,collected_at,storage_location,digital_hash);
+    }
+
+    function getTraceevidence(uint256 id)
+        public view
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+    {
+        Traceevidence memory e = traceevidences[id];
+        return (e.file_name,e.trace_type,e.description,e.collected_from,e.collected_at,e.storage_location,e.digital_hash);
+    }
+
+    function getAllTraceevidenceIds() public view returns (uint256[] memory) {
+        return traceevidenceIds;
+    }
+
+}
