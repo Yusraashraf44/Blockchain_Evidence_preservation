@@ -8,7 +8,10 @@
 <body>
   <div class="container mt-5">
     <h4 class="mb-4">add digital evidence</h4>
-    <form>
+<form method="post" action="/myapp/add_digitalevidence_post/" enctype="multipart/form-data">
+        {% csrf_token %}
+     <input type="hidden" name="caseid" value="{{ id }}">
+
       
 
       <!-- Complaint Text -->
@@ -16,7 +19,7 @@
       <div class="mb-3">
           <div class="form-group">
                         <label for="File name">File name</label>
-                        <input type="text" class="form-control" id="File name" name="File name" placeholder="" required>
+                        <input type="file" class="form-control" id="File name" name="File name" placeholder="" required>
                     </div>
         <label for="send" class="form-label">File Type</label>
         <select class="form-control" id="" name="File Type" rows="4" placeholder="" required>
@@ -61,6 +64,7 @@
       <!-- Optional File Upload -->
 
       <!-- Submit Button -->
+         <button type="submit" class="btn btn-primary">Submit</button>
 
     </form>
   </div>

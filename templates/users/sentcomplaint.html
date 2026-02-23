@@ -8,13 +8,14 @@
 <body>
   <div class="container mt-5">
     <h4 class="mb-4">Send Complaint</h4>
-    <form>
+   <form method="post" action="/myapp/sentcomplaint_post/" enctype="multipart/form-data">
+        {% csrf_token %}
       
 
       <!-- Complaint Text -->
       <div class="mb-3">
-        <label for="send" class="form-label">Send</label>
-        <textarea class="form-control" id="send" name="send" rows="4" placeholder="Write your complaints here..." required></textarea>
+        <label for="send" class="form-label">complaint</label>
+        <textarea class="form-control" id="send" name="complaint" rows="4" placeholder="Write your complaints here..." required></textarea>
       </div>
 
       <!-- Optional File Upload -->

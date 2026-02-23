@@ -43,6 +43,11 @@ class Case(models.Model):
     case_duration_days=models.CharField(max_length=100)
 
 
+class Assigncase(models.Model):
+    USERS=models.ForeignKey(Users,on_delete=models.CASCADE)
+    CASE=models.ForeignKey(Case,on_delete=models.CASCADE)
+
+
 
 
 

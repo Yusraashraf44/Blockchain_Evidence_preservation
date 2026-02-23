@@ -31,7 +31,12 @@ urlpatterns = [
     path('sentreply_get/', views.sentreply_get),
     path('sentreply_post/', views.sentreply_post),
     path('adminhome_get/', views.adminhome_get),
+    path('assigncase_get/', views.assigncase_get),
+    path('assigncase_post/', views.assigncase_post),
     # USERS---
+    path('viewassigncase_get/',views.viewassigncase_get),
+    path('viewassigncase_post/',views.viewassigncase_post),
+    path('userindex_get/',views.userindex_get),
     path('edit_get/', views.edit_get),
     path('edit_post/', views.edit_post),
     path('forgotpassword_get/', views.forgotpassword_get),
@@ -60,6 +65,19 @@ urlpatterns = [
     path('add_physicalevidence_post/',views.add_physicalevidence_post),
     path('add_traceevidence_get/',views.add_traceevidence_get),
     path('add_traceevidence_post/',views.add_traceevidence_post),
+
+
+    path('view_audio_evidence/',views.view_audio_evidence),
+    path('view_biological_evidence/',views.view_biological_evidence),
+    path('view_chemical_evidence/',views.view_chemical_evidence),
+    path('view_digital_evidence/',views.view_digital_evidence),
+    path('view_document_evidence/',views.view_document_evidence),
+    path('view_financial_evidence/',views.view_financial_evidence),
+    path('view_pattern_evidence/',views.view_pattern_evidence),
+    path('view_physical_evidence/',views.view_physical_evidence),
+    path('view_trace_evidence/',views.view_trace_evidence),
+
+
     path('addstaff_get/',views.addstaff_get),
     path('addstaff_post/',views.addstaff_post),
     path('editstaff_get/<id>',views.editstaff_get),

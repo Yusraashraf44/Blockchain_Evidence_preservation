@@ -8,13 +8,15 @@
 <body>
   <div class="container mt-5">
     <h4 class="mb-4">add chemical evidence</h4>
-    <form>
+   <form method="post" action="/myapp/add_chemicalevidence_post/" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="caseid" value="{{ id }}">
       
 
       <!-- Complaint Text -->
 <div class="form-group">
                         <label for="File name">File name</label>
-                        <input type="text" class="form-control" id="File name" name="File name" placeholder="" required>
+                        <input type="file" class="form-control" id="File name" name="File name" placeholder="" required>
                     </div>
       <div class="mb-3">
           <div class="form-group">
@@ -68,6 +70,7 @@
       <!-- Optional File Upload -->
 
       <!-- Submit Button -->
+           <button type="submit" class="btn btn-primary">Submit</button>
 
     </form>
   </div>

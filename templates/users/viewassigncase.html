@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Data Table</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Assigned case</h2>
+    <table id="registrationTable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>slno.</th>
+          <th>case_number</th>
+          <th>case_title</th>
+          <th>case_type</th>
+          <th>date_of_incident</th>
+          <th>case_description</th>
+          <th>date_filed</th>
+          <th>petitioner_name</th>
+          <th>petitioner_email</th>
+          <th>petitioner_phone</th>
+          <th>petitioner_place</th>
+          <th>petitioner_pincode</th>
+          <th>petitioner_district</th>
+          <th>petitioner_state</th>
+          <th>accused</th>
+
+          <th>filing_mode</th>
+          <th>court_name</th>
+          <th>judge_assigned</th>
+          <th>priority</th>
+          <th>remarks</th>
+          <th>case_duration_days</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+    <tbody>
+
+
+        <!-- Sample Data Row -->
+           {% for i in data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.CASE.case_number }}</td>
+          <td>{{ i.CASE.case_title }}</td>
+          <td>{{ i.CASE.case_type }}</td>
+          <td>{{ i.CASE.date_of_incident }}</td>
+          <td>{{ i.CASE.case_description }}</td>
+          <td>{{ i.CASE.date_filed }}</td>
+          <td>{{ i.CASE.petitioner_name }}</td>
+          <td>{{ i.CASE.petitioner_email }}</td>
+          <td>{{ i.CASE.petitioner_phone }}</td>
+          <td>{{ i.CASE.petitioner_place }}</td>
+          <td>{{ i.CASE.petitioner_pincode }}</td>
+          <td>{{ i.CASE.petitioner_district }}</td>
+          <td>{{ i.CASE.petitioner_state }}</td>
+          <td>{{ i.CASE.accused }}</td>
+          <td>{{ i.CASE.filing_mode }}</td>
+          <td>{{ i.CASE.court_name }}</td>
+          <td>{{ i.CASE.judge_assigned }}</td>
+          <td>{{ i.CASE.priority }}</td>
+          <td>{{ i.CASE.remarks }}</td>
+          <td>{{ i.CASE.case_duration_days }}</td>
+
+
+
+
+          <td>
+                <a href="/myapp/editcase_get/{{ i.id }}" class="btn btn-danger">Edit</a>
+                <a href="/myapp/deletecase_get/{{ i.id }}" class="btn btn-danger">Delete</a>
+
+            </td>
+
+        </tr>
+               {% endfor %}
+
+        <!-- Add more rows dynamically from backend -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#registrationTable').DataTable();
+    });
+  </script>
+</body>
+</html>

@@ -35,19 +35,23 @@
         </thead>
         <tbody>
           <!-- Sample Data Rows -->
+          {% for i in audioevidence %}
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.file_name }}<img src="{{ i.file_name }}" height="100" width="100"></td>
+            <td>{{ i.media_type }}</td>
+            <td>{{ i.duration_seconds }}</td>
+            <td>{{ i.format }}</td>
+            <td>{{ i.collected_from }}</td>
+            <td>{{ i.collected_at }}</td>
+            <td>{{ i.file_hash }}</td>
+            <td>{{ i.csedid }}</td>
+
+
 
 
           </tr>
-
+{% endfor %}
 
           <!-- Add more rows as needed -->
         </tbody>

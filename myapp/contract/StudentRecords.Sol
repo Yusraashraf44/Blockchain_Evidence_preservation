@@ -13,6 +13,7 @@ contract EvidenceRecords {
         string collected_from;
         string collected_at;
         string file_hash;
+        string caseid;
     }
 
     mapping(uint256 => Audioevidence) private audioevidences;
@@ -26,20 +27,21 @@ contract EvidenceRecords {
         string memory format,
         string memory collected_from,
         string memory collected_at,
-        string memory file_hash
+        string memory file_hash,
+        string memory caseid
     ) public {
         index_audioevidence++;
         audioevidenceIds.push(index_audioevidence);
         audioevidences[index_audioevidence] =
-            Audioevidence(file_name, media_type, duration_seconds, format, collected_from, collected_at, file_hash);
+            Audioevidence(file_name, media_type, duration_seconds, format, collected_from, collected_at, file_hash,caseid);
     }
 
     function getAudioevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Audioevidence memory e = audioevidences[id];
-        return (e.file_name,e.media_type,e.duration_seconds,e.format,e.collected_from,e.collected_at,e.file_hash);
+        return (e.file_name,e.media_type,e.duration_seconds,e.format,e.collected_from,e.collected_at,e.file_hash,e.caseid);
     }
 
     function getAllAudioevidenceIds() public view returns (uint256[] memory) {
@@ -58,6 +60,7 @@ contract EvidenceRecords {
         string collected_time;
         string lab_referenceid;
         string narration;
+        string caseid;
     }
 
     mapping(uint256 => Biologicalevidence) private biologicalevidences;
@@ -72,20 +75,21 @@ contract EvidenceRecords {
         string memory collected_date,
         string memory collected_time,
         string memory lab_referenceid,
-        string memory narration
+        string memory narration,
+        string memory caseid
     ) public {
         index_biologicalevidence++;
         biologicalevidenceIds.push(index_biologicalevidence);
         biologicalevidences[index_biologicalevidence] =
-            Biologicalevidence(file_name,evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration);
+            Biologicalevidence(file_name,evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration,caseid);
     }
 
     function getBiologicalevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Biologicalevidence memory e = biologicalevidences[id];
-        return (e.file_name,e.evidence_type,e.source,e.collection_location,e.collected_date,e.collected_time,e.lab_referenceid,e.narration);
+        return (e.file_name,e.evidence_type,e.source,e.collection_location,e.collected_date,e.collected_time,e.lab_referenceid,e.narration,e.caseid);
     }
 
     function getAllBiologicalevidenceIds() public view returns (uint256[] memory) {
@@ -103,6 +107,7 @@ contract EvidenceRecords {
         string collected_at;
         string lab_refernceid;
         string digital_hash;
+        string caseid;
     }
 
     mapping(uint256 => Chemicalevidence) private chemicalevidences;
@@ -116,20 +121,21 @@ contract EvidenceRecords {
         string memory collected_from,
         string memory collected_at,
         string memory lab_refernceid,
-        string memory digital_hash
+        string memory digital_hash,
+        string memory caseid
     ) public {
         index_chemicalevidence++;
         chemicalevidenceIds.push(index_chemicalevidence);
         chemicalevidences[index_chemicalevidence] =
-            Chemicalevidence(file_name,substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash);
+            Chemicalevidence(file_name,substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash,caseid);
     }
 
     function getChemicalevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Chemicalevidence memory e = chemicalevidences[id];
-        return (e.file_name,e.substance_type,e.quantity,e.collected_from,e.collected_at,e.lab_refernceid,e.digital_hash);
+        return (e.file_name,e.substance_type,e.quantity,e.collected_from,e.collected_at,e.lab_refernceid,e.digital_hash,e.caseid);
     }
 
     function getAllChemicalevidenceIds() public view returns (uint256[] memory) {
@@ -147,6 +153,7 @@ contract EvidenceRecords {
         string collected_source;
         string collected_time;
         string preservation_time;
+        string caseid;
     }
 
     mapping(uint256 => Digitalevidence) private digitalevidences;
@@ -160,20 +167,21 @@ contract EvidenceRecords {
         string memory hash_value,
         string memory collected_source,
         string memory collected_time,
-        string memory preservation_time
+        string memory preservation_time,
+        string memory caseid
     ) public {
         index_digitalevidence++;
         digitalevidenceIds.push(index_digitalevidence);
         digitalevidences[index_digitalevidence] =
-            Digitalevidence(file_name,file_type,file_size,hash_value,collected_source,collected_time,preservation_time);
+            Digitalevidence(file_name,file_type,file_size,hash_value,collected_source,collected_time,preservation_time,caseid);
     }
 
     function getDigitalevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Digitalevidence memory e = digitalevidences[id];
-        return (e.file_name,e.file_type,e.file_size,e.hash_value,e.collected_source,e.collected_time,e.preservation_time);
+        return (e.file_name,e.file_type,e.file_size,e.hash_value,e.collected_source,e.collected_time,e.preservation_time,e.caseid);
     }
 
     function getAllDigitalevidenceIds() public view returns (uint256[] memory) {
@@ -191,6 +199,7 @@ contract EvidenceRecords {
         string collected_from;
         string collected_at;
         string file_hash;
+        string caseid;
     }
 
     mapping(uint256 => Documentevidence) private documentevidences;
@@ -204,20 +213,21 @@ contract EvidenceRecords {
         string memory pages,
         string memory collected_from,
         string memory collected_at,
-        string memory file_hash
+        string memory file_hash,
+        string memory caseid
     ) public {
         index_documentevidence++;
         documentevidenceIds.push(index_documentevidence);
         documentevidences[index_documentevidence] =
-            Documentevidence(file_name,document_type,title,pages,collected_from,collected_at,file_hash);
+            Documentevidence(file_name,document_type,title,pages,collected_from,collected_at,file_hash,caseid);
     }
 
     function getDocumentevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Documentevidence memory e = documentevidences[id];
-        return (e.file_name,e.document_type,e.title,e.pages,e.collected_from,e.collected_at,e.file_hash);
+        return (e.file_name,e.document_type,e.title,e.pages,e.collected_from,e.collected_at,e.file_hash,e.caseid);
     }
 
     function getAllDocumentevidenceIds() public view returns (uint256[] memory) {
@@ -235,6 +245,7 @@ contract EvidenceRecords {
         string collected_from;
         string collected_at;
         string digital_hash;
+        string caseid;
     }
 
     mapping(uint256 => Financialaccoundingevidence) private financialaccoundingevidences;
@@ -248,20 +259,21 @@ contract EvidenceRecords {
         string memory amount,
         string memory collected_from,
         string memory collected_at,
-        string memory digital_hash
+        string memory digital_hash,
+        string memory caseid
     ) public {
         index_financialaccoundingevidence++;
         financialaccoundingevidenceIds.push(index_financialaccoundingevidence);
         financialaccoundingevidences[index_financialaccoundingevidence] =
-            Financialaccoundingevidence(file_name,transaction_type,reference_number,amount,collected_from,collected_at,digital_hash);
+            Financialaccoundingevidence(file_name,transaction_type,reference_number,amount,collected_from,collected_at,digital_hash,caseid);
     }
 
     function getFinancialaccoundingevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Financialaccoundingevidence memory e = financialaccoundingevidences[id];
-        return (e.file_name,e.transaction_type,e.reference_number,e.amount,e.collected_from,e.collected_at,e.digital_hash);
+        return (e.file_name,e.transaction_type,e.reference_number,e.amount,e.collected_from,e.collected_at,e.digital_hash,e.caseid);
     }
 
     function getAllFinancialaccoundingevidenceIds() public view returns (uint256[] memory) {
@@ -278,6 +290,7 @@ contract EvidenceRecords {
         string collected_from;
         string collected_at;
         string file_hash;
+        string caseid;
     }
 
     mapping(uint256 => Patternevidence) private patternevidences;
@@ -290,20 +303,21 @@ contract EvidenceRecords {
         string memory capture_method,
         string memory collected_from,
         string memory collected_at,
-        string memory file_hash
+        string memory file_hash,
+        string memory caseid
     ) public {
         index_patternevidence++;
         patternevidenceIds.push(index_patternevidence);
         patternevidences[index_patternevidence] =
-            Patternevidence(file_name,pattern_type,capture_method,collected_from,collected_at,file_hash);
+            Patternevidence(file_name,pattern_type,capture_method,collected_from,collected_at,file_hash,caseid);
     }
 
     function getPatternevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Patternevidence memory e = patternevidences[id];
-        return (e.file_name,e.pattern_type,e.capture_method,e.collected_from,e.collected_at,e.file_hash);
+        return (e.file_name,e.pattern_type,e.capture_method,e.collected_from,e.collected_at,e.file_hash,e.caseid);
     }
 
     function getAllPatternevidenceIds() public view returns (uint256[] memory) {
@@ -321,6 +335,7 @@ contract EvidenceRecords {
         string collected_date;
         string collected_time;
         string digital_hash;
+        string caseid;
     }
 
     mapping(uint256 => Physicalevidence) private physicalevidences;
@@ -334,20 +349,21 @@ contract EvidenceRecords {
         string memory collection_location,
         string memory collected_date,
         string memory collected_time,
-        string memory digital_hash
+        string memory digital_hash,
+        string memory caseid
     ) public {
         index_physicalevidence++;
         physicalevidenceIds.push(index_physicalevidence);
         physicalevidences[index_physicalevidence] =
-            Physicalevidence(file_name,evidence_type,description,collection_location,collected_date,collected_time,digital_hash);
+            Physicalevidence(file_name,evidence_type,description,collection_location,collected_date,collected_time,digital_hash,caseid);
     }
 
     function getPhysicalevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Physicalevidence memory e = physicalevidences[id];
-        return (e.file_name,e.evidence_type,e.description,e.collection_location,e.collected_date,e.collected_time,e.digital_hash);
+        return (e.file_name,e.evidence_type,e.description,e.collection_location,e.collected_date,e.collected_time,e.digital_hash,e.caseid);
     }
 
     function getAllPhysicalevidenceIds() public view returns (uint256[] memory) {
@@ -365,6 +381,7 @@ contract EvidenceRecords {
         string collected_at;
         string storage_location;
         string digital_hash;
+        string caseid;
     }
 
     mapping(uint256 => Traceevidence) private traceevidences;
@@ -378,20 +395,21 @@ contract EvidenceRecords {
         string memory collected_from,
         string memory collected_at,
         string memory storage_location,
-        string memory digital_hash
+        string memory digital_hash,
+        string memory caseid
     ) public {
         index_traceevidence++;
         traceevidenceIds.push(index_traceevidence);
         traceevidences[index_traceevidence] =
-            Traceevidence(file_name,trace_type,description,collected_from,collected_at,storage_location,digital_hash);
+            Traceevidence(file_name,trace_type,description,collected_from,collected_at,storage_location,digital_hash,caseid);
     }
 
     function getTraceevidence(uint256 id)
         public view
-        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory)
+        returns (string memory,string memory,string memory,string memory,string memory,string memory,string memory,string memory)
     {
         Traceevidence memory e = traceevidences[id];
-        return (e.file_name,e.trace_type,e.description,e.collected_from,e.collected_at,e.storage_location,e.digital_hash);
+        return (e.file_name,e.trace_type,e.description,e.collected_from,e.collected_at,e.storage_location,e.digital_hash,e.caseid);
     }
 
     function getAllTraceevidenceIds() public view returns (uint256[] memory) {
