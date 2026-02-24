@@ -329,8 +329,23 @@ def forgotpassword_get(request):
     return render(request,'users/forgotpassword.html')
 
 def forgotpassword_post(request):
+    current_password = request.POST['currentpassword']
+    confirm_password = request.POST['confirmpassword']
+    new_password = request.POST['newpassword']
+    data = request.user
+    if not data.check_password(current_password):
+        messages.error(request, 'invalid password')
+        return redirect('/myapp/forgotpassword_get/')
+    if new_password != confirm_password:
+        messages.error(request, 'Password not match')
+        return redirect('/myapp/forgotpassword_get/')
 
-    return render(request,'users/forgotpassword.html')
+    data.set_password(new_password)
+    data.save()
+    return redirect('/myapp/login_get/')
+
+
+
 
 
 
