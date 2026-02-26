@@ -84,7 +84,14 @@
                             </div>
                         </div>
 
-                        <a href="/myapp/assigncase_get/" class="nav-item nav-link">Assign case</a>
+{#                        <a href="/myapp/assigncase_get/" class="nav-item nav-link">Assign case</a>#}
+                          <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> AssignedCase</a>
+                            <div class="dropdown-menu">
+                                <a href="/myapp/assigncase_get/" class="dropdown-item">Assign</a>
+                                <a href="/myapp/viewassignedcase_post/" class="dropdown-item">View Assign</a>
+                            </div>
+                        </div>
 
                         <a href="/myapp/viewcomplaint_get/" class="nav-item nav-link">Complaint</a>
 

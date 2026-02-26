@@ -36,7 +36,15 @@
           <th>priority</th>
           <th>remarks</th>
           <th>case_duration_days</th>
-            <th>Action</th>
+            <th>Audio_Evidence</th>
+            <th>Biological_Evidence</th>
+            <th>Chemical_Evidence</th>
+            <th>Digital_Evidence</th>
+            <th>Document_Evidence</th>
+            <th>Financialaccoundind_Evidence</th>
+            <th>Pattern_Evidence</th>
+            <th>Physical_Evidence</th>
+            <th>Trace_Evidence</th>
 
         </tr>
         </thead>
@@ -72,10 +80,51 @@
 
 
           <td>
-                <a href="/myapp/editcase_get/{{ i.id }}" class="btn btn-danger">Edit</a>
-                <a href="/myapp/deletecase_get/{{ i.id }}" class="btn btn-danger">Delete</a>
+                <a href="/myapp/add_audiovisualevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_audio_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
 
             </td>
+            <td>
+                <a href="/myapp/add_biologicalevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_biological_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+            <td>
+                <a href="/myapp/add_chemicalevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_chemical_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+            <td>
+                <a href="/myapp/add_digitalevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_digital_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+            <td>
+                <a href="/myapp/add_documentevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_document_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+            <td>
+                <a href="/myapp/add_financialaccountingevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_financial_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+         <td>
+                <a href="/myapp/add_patternevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_pattern_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+            <td>
+                <a href="/myapp/add_physicalevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_physical_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+            <td>
+                <a href="/myapp/add_traceevidence_get/{{ i.id }}" class="btn btn-danger">ADD</a>
+                <a href="/myapp/view_trace_evidence/{{ i.id }}" class="btn btn-danger">VIEW</a>
+
+            </td>
+
 
         </tr>
                {% endfor %}

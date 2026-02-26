@@ -7,7 +7,7 @@
 </head>
 <body>
   <div class="container mt-5">
-    <h4 class="mb-4">add trace evidence</h4>
+    <h4 class="mb-4">Add Trace Evidence</h4>
     <form method="post" action="/myapp/add_traceevidence_post/" enctype="multipart/form-data">
         {% csrf_token %}
          <input type="hidden" name="caseid" value="{{ id }}">

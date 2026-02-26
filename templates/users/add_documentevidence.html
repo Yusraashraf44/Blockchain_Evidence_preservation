@@ -7,10 +7,11 @@
 </head>
 <body>
   <div class="container mt-5">
-    <h4 class="mb-4">add document evidence</h4>
+    <h4 class="mb-4">Add Document Evidence</h4>
     <form method="post" action="/myapp/add_documentevidence_post/" enctype="multipart/form-data">
         {% csrf_token %}
       
+     <input type="hidden" name="caseid" value="{{ id }}">
 
       <!-- Complaint Text -->
  <div class="mb-3">

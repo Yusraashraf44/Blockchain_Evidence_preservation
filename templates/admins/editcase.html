@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <h2 class="mb-4">Edit Case</h2>
-   <form method="post" action="/myapp/editcase_post/">
+   <form method="post" action="/myapp/editcase_post/" enctype="multipart/form-data">
            {% csrf_token %}
    <input type="hidden" value="{{ d.id }}" name="id">
       <div class="row mb-3">

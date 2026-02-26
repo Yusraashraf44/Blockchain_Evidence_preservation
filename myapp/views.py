@@ -233,7 +233,7 @@ def editcase_get(request,id):
     return render(request, 'admins/editcase.html',{'d':f})
 
 def editcase_post(request):
-    caseid = request.POST['caseid']
+    # caseid = request.POST['caseid']
     case_title = request.POST['case_title']
     case_type = request.POST['case_type']
     date_of_incident = request.POST['date_of_incident']
@@ -257,7 +257,6 @@ def editcase_post(request):
 
     h = Case.objects.get(id=case_id)
 
-    h.caseid = caseid
     h.case_title = case_title
     h.case_type = case_type
     h.date_of_incident = date_of_incident
@@ -304,13 +303,243 @@ def assigncase_post(request):
 
 
 
-    return render(request,'admins/assigncase.html')
+    return redirect('/myapp/viewassignedcase_post/')
+
+def viewassignedcase_post(request):
+    data=Assigncase.objects.all()
+    return render(request,'admins/viewassignedcases.html',{'data':data})
+
+def editassigncase_get(request,id):
+    f=Assigncase.objects.get(id=id)
+    staff = Users.objects.all()
+    case = Case.objects.all()
+    return render(request, 'admins/editassigncase.html',{'d':f,'staff':staff,'case':case})
+
+
+
+def editassigncase_post(request):
+    staff=request.POST["staff"]
+    case= request.POST["case"]
+    id=request.POST['id']
+
+    data=Assigncase.objects.get(id=id)
+    data.USERS_id=staff
+    data.CASE_id=case
+
+    data.save()
+
+
+
+
+
+    return redirect('/myapp/viewassignedcase_post/')
+
+def deleteassignedcase_get(request,id):
+    Assigncase.objects.get(id=id).delete()
+
+    return redirect('/myapp/viewassignedcase_post/')
+
+
+
+def adminview_audio_evidence(request,id):
+    audio_list = []
+
+    ids = contract.functions.getAllAudioevidenceIds().call()
+    for evidence_id in ids:
+        file_name, media_type,duration_seconds,format,collected_from,collected_at,file_hash,caseid = contract.functions.getAudioevidence(evidence_id).call()
+
+        if str(caseid) == str(id):
+
+            audio_list.append({
+                "id": evidence_id,
+                "file_name": file_name,
+                "media_type": media_type,
+                "duration_seconds": duration_seconds,
+                "format": format,
+                "collected_from": collected_from,
+                "collected_at": collected_at,
+                "file_hash": file_hash
+            })
+    return render(request,'admins/adminviewadd_audiovisualevidence.html', {"audioevidence": audio_list})
+
+
+def adminview_biological_evidence(request,id):
+    biological_list = []
+
+    ids = contract.functions.getAllBiologicalevidenceIds().call()
+    for evidence_id in ids:
+        file_name, evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration,caseid = contract.functions.getBiologicalevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            biological_list.append({
+
+
+                "id": evidence_id,
+                "file_name": file_name,
+                "evidence_type": evidence_type,
+                "source": source,
+                "collection_location": collection_location,
+                "collected_date": collected_date,
+                "collected_time": collected_time,
+                "lab_referenceid": lab_referenceid,
+                "narration": narration
+        })
+    return render(request,'admins/adminviewadd_biologicalevidence.html', {"biologicalevidence": biological_list})
+
+def adminview_chemical_evidence(request,id):
+    chemical_list = []
+
+    ids = contract.functions.getAllChemicalevidenceIds().call()
+    for evidence_id in ids:
+        file_name, substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash,caseid = contract.functions.getChemicalevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            chemical_list.append({
+
+            "id": evidence_id,
+            "file_name": file_name,
+            "substance_type": substance_type,
+            "quantity": quantity,
+            "collected_from": collected_from,
+            "collected_at": collected_at,
+            "lab_refernceid": lab_refernceid,
+            "digital_hash": digital_hash
+
+        })
+    return render(request,'admins/adminviewadd_chemicalevidence.html', {"chemicalevidence": chemical_list})
+
+
+def adminview_digital_evidence(request,id):
+    digital_list = []
+
+    ids = contract.functions.getAllDigitalevidenceIds().call()
+    for evidence_id in ids:
+        file_name, file_type,file_size,hash_value,collected_source,collected_time,preservation_time,caseid = contract.functions.getDigitalevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            digital_list.append({
+            "id": evidence_id,
+            "file_name": file_name,
+            "file_type": file_type,
+            "file_size": file_size,
+            "hash_value": hash_value,
+            "collected_source": collected_source,
+            "collected_time": collected_time,
+            "preservation_time": preservation_time,
+
+        })
+    return render(request,'admins/adminviewadd_digitalevidence.html', {"digitalevidence": digital_list})
+
+def adminview_document_evidence(request,id):
+    document_list = []
+
+    ids = contract.functions.getAllDocumentevidenceIds().call()
+    for evidence_id in ids:
+        file_name, document_type,title,pages,collected_from,collected_at,file_hash,caseid = contract.functions.getDocumentevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            document_list.append({
+            "id": evidence_id,
+            "file_name": file_name,
+            "document_type": document_type,
+            "title": title,
+            "pages": pages,
+            "collected_from": collected_from,
+            "collected_at": collected_at,
+            "file_hash": file_hash,
+
+        })
+    return render(request,'admins/adminviewadd_documentevidence.html', {"documentevidence": document_list})
+
+
+def adminview_financial_evidence(request,id):
+    financial_list = []
+
+    ids = contract.functions.getAllFinancialaccoundingevidenceIds().call()
+    for evidence_id in ids:
+        file_name, transaction_type,reference_number,amount,collected_from,collected_at,digital_hash,caseid = contract.functions.getFinancialaccoundingevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            financial_list.append({
+            "id": evidence_id,
+            "file_name": file_name,
+            "transaction_type": transaction_type,
+            "reference_number": reference_number,
+            "amount": amount,
+            "collected_from": collected_from,
+            "collected_at": collected_at,
+            "digital_hash": digital_hash
+
+        })
+    return render(request,'admins/adminviewadd_financialaccountingevidence.html', {"Financialaccoundingevidence": financial_list})
+
+
+def adminview_pattern_evidence(request,id):
+    pattern_list = []
+
+    ids = contract.functions.getAllPatternevidenceIds().call()
+    for evidence_id in ids:
+        file_name, pattern_type,capture_method,collected_from,collected_at,file_hash,caseid = contract.functions.getPatternevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            pattern_list.append({
+            "id": evidence_id,
+            "file_name": file_name,
+            "pattern_type": pattern_type,
+            "capture_method": capture_method,
+            "collected_from": collected_from,
+            "collected_at": collected_at,
+            "file_hash": file_hash,
+
+        })
+    return render(request,'admins/adminviewadd_patternevidence.html', {"patternevidence": pattern_list})
+
+
+def adminview_physical_evidence(request,id):
+    physical_list = []
+
+    ids = contract.functions.getAllPhysicalevidenceIds().call()
+    for evidence_id in ids:
+        file_name, evidence_type,description,collection_location,collected_date,collected_time,digital_hash,caseid = contract.functions.getPhysicalevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            physical_list.append({
+            "id": evidence_id,
+            "file_name": file_name,
+            "evidence_type": evidence_type,
+            "description": description,
+            "collection_location": collection_location,
+            "collected_date": collected_date,
+            "collected_time": collected_time,
+            "digital_hash": digital_hash
+
+        })
+    return render(request,'admins/adminviewadd_physicalevidence.html', {"physicalevidence": physical_list})
+
+def adminview_trace_evidence(request,id):
+    trace_list = []
+
+    ids = contract.functions.getAllTraceevidenceIds().call()
+    for evidence_id in ids:
+        file_name, trace_type,description,collected_from,collected_at,storage_location,digital_hash,caseid = contract.functions.getTraceevidence(evidence_id).call()
+        if str(caseid) == str(id):
+            trace_list.append({
+            "id": evidence_id,
+            "file_name": file_name,
+            "trace_type": trace_type,
+            "description": description,
+            "collected_from": collected_from,
+            "collected_at": collected_at,
+            "storage_location": storage_location,
+            "digital_hash": digital_hash
+
+        })
+    return render(request,'admins/adminviewadd_traceevidence.html', {"traceevidence": trace_list})
+
+
+
+
+
+
 
 
 
 # --------------------USERS
-def viewassigncase_get(request):
-    return render(request,'users/viewassigncase.html')
+# def viewassigncase_get(request):
+#     return render(request,'users/viewassigncase.html')
 
 def viewassigncase_post(request):
     data=Assigncase.objects.filter(USERS__AUTHUSER=request.user)
@@ -572,7 +801,7 @@ def add_physicalevidence_post(request):
     collection_location = request.POST["Collection Location"]
     collected_date = request.POST["Collected Date"]
     collected_time = request.POST["Collected Time"]
-    digital_hash = request.POST["digital hash"]
+    digital_hash = request.POST["Digital Hash"]
     caseid = request.POST["caseid"]
 
 
@@ -617,51 +846,59 @@ def add_traceevidence_post(request):
 
     return render(request,'users/add_traceevidence.html')
 
-def view_audio_evidence(request):
+def view_audio_evidence(request,id):
     audio_list = []
 
     ids = contract.functions.getAllAudioevidenceIds().call()
     for evidence_id in ids:
         file_name, media_type,duration_seconds,format,collected_from,collected_at,file_hash,caseid = contract.functions.getAudioevidence(evidence_id).call()
-        audio_list.append({
-            "id": evidence_id,
-            "file_name": file_name,
-            "media_type": media_type,
-            "duration_seconds": duration_seconds,
-            "format": format,
-            "collected_from": collected_from,
-            "collected_at": collected_at,
-            "file_hash": file_hash
-        })
+
+        if str(caseid) == str(id):
+
+            audio_list.append({
+                "id": evidence_id,
+                "file_name": file_name,
+                "media_type": media_type,
+                "duration_seconds": duration_seconds,
+                "format": format,
+                "collected_from": collected_from,
+                "collected_at": collected_at,
+                "file_hash": file_hash
+            })
     return render(request,'users/viewadd_audiovisualevidence.html', {"audioevidence": audio_list})
 
 
-def view_biological_evidence(request):
+def view_biological_evidence(request,id):
     biological_list = []
 
     ids = contract.functions.getAllBiologicalevidenceIds().call()
     for evidence_id in ids:
         file_name, evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration,caseid = contract.functions.getBiologicalevidence(evidence_id).call()
-        biological_list.append({
-            "id": evidence_id,
-            "file_name": file_name,
-            "evidence_type": evidence_type,
-            "source": source,
-            "collection_location": collection_location,
-            "collected_date": collected_date,
-            "collected_time": collected_time,
-            "lab_referenceid": lab_referenceid,
-            "narration": narration
+        if str(caseid) == str(id):
+            biological_list.append({
+
+
+                "id": evidence_id,
+                "file_name": file_name,
+                "evidence_type": evidence_type,
+                "source": source,
+                "collection_location": collection_location,
+                "collected_date": collected_date,
+                "collected_time": collected_time,
+                "lab_referenceid": lab_referenceid,
+                "narration": narration
         })
     return render(request,'users/viewadd_biologicalevidence.html', {"biologicalevidence": biological_list})
 
-def view_chemical_evidence(request):
+def view_chemical_evidence(request,id):
     chemical_list = []
 
     ids = contract.functions.getAllChemicalevidenceIds().call()
     for evidence_id in ids:
         file_name, substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash,caseid = contract.functions.getChemicalevidence(evidence_id).call()
-        chemical_list.append({
+        if str(caseid) == str(id):
+            chemical_list.append({
+
             "id": evidence_id,
             "file_name": file_name,
             "substance_type": substance_type,
@@ -675,13 +912,14 @@ def view_chemical_evidence(request):
     return render(request,'users/viewadd_chemicalevidence.html', {"chemicalevidence": chemical_list})
 
 
-def view_digital_evidence(request):
+def view_digital_evidence(request,id):
     digital_list = []
 
     ids = contract.functions.getAllDigitalevidenceIds().call()
     for evidence_id in ids:
         file_name, file_type,file_size,hash_value,collected_source,collected_time,preservation_time,caseid = contract.functions.getDigitalevidence(evidence_id).call()
-        digital_list.append({
+        if str(caseid) == str(id):
+            digital_list.append({
             "id": evidence_id,
             "file_name": file_name,
             "file_type": file_type,
@@ -694,13 +932,14 @@ def view_digital_evidence(request):
         })
     return render(request,'users/viewadd_digitalevidence.html', {"digitalevidence": digital_list})
 
-def view_document_evidence(request):
+def view_document_evidence(request,id):
     document_list = []
 
     ids = contract.functions.getAllDocumentevidenceIds().call()
     for evidence_id in ids:
         file_name, document_type,title,pages,collected_from,collected_at,file_hash,caseid = contract.functions.getDocumentevidence(evidence_id).call()
-        document_list.append({
+        if str(caseid) == str(id):
+            document_list.append({
             "id": evidence_id,
             "file_name": file_name,
             "document_type": document_type,
@@ -714,13 +953,14 @@ def view_document_evidence(request):
     return render(request,'users/viewadd_documentevidence.html', {"documentevidence": document_list})
 
 
-def view_financial_evidence(request):
+def view_financial_evidence(request,id):
     financial_list = []
 
     ids = contract.functions.getAllFinancialaccoundingevidenceIds().call()
     for evidence_id in ids:
         file_name, transaction_type,reference_number,amount,collected_from,collected_at,digital_hash,caseid = contract.functions.getFinancialaccoundingevidence(evidence_id).call()
-        financial_list.append({
+        if str(caseid) == str(id):
+            financial_list.append({
             "id": evidence_id,
             "file_name": file_name,
             "transaction_type": transaction_type,
@@ -734,13 +974,14 @@ def view_financial_evidence(request):
     return render(request,'users/viewadd_financialaccountingevidence.html', {"Financialaccoundingevidence": financial_list})
 
 
-def view_pattern_evidence(request):
+def view_pattern_evidence(request,id):
     pattern_list = []
 
     ids = contract.functions.getAllPatternevidenceIds().call()
     for evidence_id in ids:
         file_name, pattern_type,capture_method,collected_from,collected_at,file_hash,caseid = contract.functions.getPatternevidence(evidence_id).call()
-        pattern_list.append({
+        if str(caseid) == str(id):
+            pattern_list.append({
             "id": evidence_id,
             "file_name": file_name,
             "pattern_type": pattern_type,
@@ -753,13 +994,14 @@ def view_pattern_evidence(request):
     return render(request,'users/viewadd_patternevidence.html', {"patternevidence": pattern_list})
 
 
-def view_physical_evidence(request):
+def view_physical_evidence(request,id):
     physical_list = []
 
     ids = contract.functions.getAllPhysicalevidenceIds().call()
     for evidence_id in ids:
         file_name, evidence_type,description,collection_location,collected_date,collected_time,digital_hash,caseid = contract.functions.getPhysicalevidence(evidence_id).call()
-        physical_list.append({
+        if str(caseid) == str(id):
+            physical_list.append({
             "id": evidence_id,
             "file_name": file_name,
             "evidence_type": evidence_type,
@@ -772,13 +1014,14 @@ def view_physical_evidence(request):
         })
     return render(request,'users/viewadd_physicalevidence.html', {"physicalevidence": physical_list})
 
-def view_trace_evidence(request):
+def view_trace_evidence(request,id):
     trace_list = []
 
     ids = contract.functions.getAllTraceevidenceIds().call()
     for evidence_id in ids:
         file_name, trace_type,description,collected_from,collected_at,storage_location,digital_hash,caseid = contract.functions.getTraceevidence(evidence_id).call()
-        trace_list.append({
+        if str(caseid) == str(id):
+            trace_list.append({
             "id": evidence_id,
             "file_name": file_name,
             "trace_type": trace_type,
