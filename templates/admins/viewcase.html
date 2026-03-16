@@ -1,98 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Registration Data Table</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- DataTables CSS -->
-  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Registered Case</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Registered case</h2>
-    <table id="registrationTable" class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>slno.</th>
-          <th>case_number</th>
-          <th>case_title</th>
-          <th>case_type</th>
-          <th>date_of_incident</th>
-          <th>case_description</th>
-          <th>date_filed</th>
-          <th>petitioner_name</th>
-          <th>petitioner_email</th>
-          <th>petitioner_phone</th>
-          <th>petitioner_place</th>
-          <th>petitioner_pincode</th>
-          <th>petitioner_district</th>
-          <th>petitioner_state</th>
-          <th>accused</th>
 
-          <th>filing_mode</th>
-          <th>court_name</th>
-          <th>judge_assigned</th>
-          <th>priority</th>
-          <th>remarks</th>
-          <th>case_duration_days</th>
-            <th>Action</th>
+<div class="container mt-4">
 
-        </tr>
-        </thead>
-    <tbody>
+    <h2 class="text-center mb-4">Registered Case</h2>
 
+    <div class="table-responsive">
 
-        <!-- Sample Data Row -->
-           {% for i in data %}
-        <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>{{ i.case_number }}</td>
-          <td>{{ i.case_title }}</td>
-          <td>{{ i.case_type }}</td>
-          <td>{{ i.date_of_incident }}</td>
-          <td>{{ i.case_description }}</td>
-          <td>{{ i.date_filed }}</td>
-          <td>{{ i.petitioner_name }}</td>
-          <td>{{ i.petitioner_email }}</td>
-          <td>{{ i.petitioner_phone }}</td>
-          <td>{{ i.petitioner_place }}</td>
-          <td>{{ i.petitioner_pincode }}</td>
-          <td>{{ i.petitioner_district }}</td>
-          <td>{{ i.petitioner_state }}</td>
-          <td>{{ i.accused }}</td>
-          <td>{{ i.filing_mode }}</td>
-          <td>{{ i.court_name }}</td>
-          <td>{{ i.judge_assigned }}</td>
-          <td>{{ i.priority }}</td>
-          <td>{{ i.remarks }}</td>
-          <td>{{ i.case_duration_days }}</td>
-            
+        <table class="table table-bordered table-striped table-hover">
 
+            <thead class="table-dark">
+            <tr>
+                <th>Sl.No</th>
+                <th>Case Number</th>
+                <th>Case Details</th>
+                <th>Petitioner Details</th>
+                <th>Accused</th>
+                <th>Filing Mode</th>
+                <th>Court Details</th>
+                <th>Remarks</th>
+                <th>Action</th>
+                <th>View Evidence</th>
+            </tr>
+            </thead>
 
+            <tbody>
 
-          <td>
-                <a href="/myapp/editcase_get/{{ i.id }}" class="btn btn-danger">Edit</a>
-                <a href="/myapp/deletecase_get/{{ i.id }}" class="btn btn-danger">Delete</a>
+            {% for i in data %}
+                <tr>
 
-            </td>
+                    <td>{{ forloop.counter }}</td>
 
-        </tr>
-               {% endfor %}
+                    <td>{{ i.case_number }}</td>
 
-        <!-- Add more rows dynamically from backend -->
-      </tbody>
-    </table>
-  </div>
+                    <td>
+                        <b>Type : </b>{{ i.case_type }} <br>
+                        <p><h5>Decscrption</h5></p>
+                        {{ i.case_description }} <br>
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#registrationTable').DataTable();
-    });
-  </script>
+                        <b>DOI : </b>{{ i.date_of_incident }} <br>
+                        <b>DOF : </b>{{ i.date_filed }} <br>
+                        <b>Duration : </b>{{ i.case_duration_days }}
+                    </td>
+
+                    <td>
+                        {{ i.petitioner_Details }} <br>
+                        {{ i.petitioner_name }} <br>
+                        {{ i.petitioner_email }} <br>
+                        {{ i.petitioner_phone }} <br>
+                        {{ i.petitioner_place }} <br>
+                        {{ i.petitioner_pincode }} <br>
+                        {{ i.petitioner_district }} <br>
+                        {{ i.petitioner_state }}
+                    </td>
+
+                    <td>{{ i.accused }}</td>
+
+                    <td>{{ i.filing_mode }}</td>
+
+                    <td>
+                        {{ i.court_details }} <br>
+                        {{ i.judge_assigned }} <br>
+                        {{ i.priority }}
+                    </td>
+
+                    <td>{{ i.remarks }}</td>
+
+                    <td>
+                        <a href="/myapp/editcase_get/{{ i.id }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="/myapp/deletecase_get/{{ i.id }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+
+                    <td>
+                        <a href="/myapp/adminview_audio_evidence/{{ i.id }}"
+                           class="btn btn-primary btn-sm mb-1">Audio</a><br>
+
+                        <a href="/myapp/adminview_biological_evidence/{{ i.id }}" class="btn btn-success btn-sm mb-1">Biological</a><br>
+
+                        <a href="/myapp/adminview_chemical_evidence/{{ i.id }}" class="btn btn-info btn-sm mb-1">Chemical</a><br>
+
+                        <a href="/myapp/adminview_digital_evidence/{{ i.id }}" class="btn btn-secondary btn-sm mb-1">Digital</a><br>
+
+                        <a href="/myapp/adminview_document_evidence/{{ i.id }}" class="btn btn-dark btn-sm mb-1">Document</a><br>
+
+                        <a href="/myapp/adminview_financial_evidence/{{ i.id }}" class="btn btn-warning btn-sm mb-1">Financial</a><br>
+
+                        <a href="/myapp/adminview_pattern_evidence/{{ i.id }}" class="btn btn-primary btn-sm mb-1">Pattern</a><br>
+
+                        <a href="/myapp/adminview_physical_evidence/{{ i.id }}" class="btn btn-success btn-sm mb-1">Physical</a><br>
+
+                        <a href="/myapp/adminview_trace_evidence/{{ i.id }}" class="btn btn-danger btn-sm">Trace</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
 </body>
 </html>

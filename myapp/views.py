@@ -40,6 +40,12 @@ def logout_get(request):
     logout(request)
     return redirect('/myapp/login_get/')
 
+def forgotpassword_get(request):
+    return render(request,'forgotpassword.html')
+def forgotpassword_post(request):
+    return
+
+
 
 
 # A D M I N ---------
@@ -94,6 +100,10 @@ def sentreply_post(request):
     c.status='replied'
     c.save()
     return redirect('myapp/viewcomplaint_get/')
+
+def viewcomplaint_get(request):
+    c=Complaint.objects.all()
+    return render(request,'admins/viewcomplaint_get/',{'c':c})
 
 def addstaff_get(request):
     return render(request,'admins/addstaff.html')
@@ -200,7 +210,7 @@ def addcase_post(request):
     case_duration_days = request.POST['case_duration_days']
 
     c=Case()
-    c.caseid=caseid
+    c.case_number=caseid
     c.case_title=case_title
     c.case_type=case_type
     c.date_of_incident=date_of_incident
@@ -233,7 +243,7 @@ def editcase_get(request,id):
     return render(request, 'admins/editcase.html',{'d':f})
 
 def editcase_post(request):
-    # caseid = request.POST['caseid']
+    case_number = request.POST['case_number']
     case_title = request.POST['case_title']
     case_type = request.POST['case_type']
     date_of_incident = request.POST['date_of_incident']
@@ -257,6 +267,7 @@ def editcase_post(request):
 
     h = Case.objects.get(id=case_id)
 
+    h.case_number = case_number
     h.case_title = case_title
     h.case_type = case_type
     h.date_of_incident = date_of_incident
@@ -328,10 +339,6 @@ def editassigncase_post(request):
 
     data.save()
 
-
-
-
-
     return redirect('/myapp/viewassignedcase_post/')
 
 def deleteassignedcase_get(request,id):
@@ -359,6 +366,8 @@ def adminview_audio_evidence(request,id):
                 "collected_from": collected_from,
                 "collected_at": collected_at,
                 "file_hash": file_hash
+
+
             })
     return render(request,'admins/adminviewadd_audiovisualevidence.html', {"audioevidence": audio_list})
 
@@ -369,20 +378,22 @@ def adminview_biological_evidence(request,id):
     ids = contract.functions.getAllBiologicalevidenceIds().call()
     for evidence_id in ids:
         file_name, evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration,caseid = contract.functions.getBiologicalevidence(evidence_id).call()
-        if str(caseid) == str(id):
-            biological_list.append({
+        # if str(caseid) == str(id):
+        biological_list.append({
 
 
-                "id": evidence_id,
-                "file_name": file_name,
-                "evidence_type": evidence_type,
-                "source": source,
-                "collection_location": collection_location,
-                "collected_date": collected_date,
-                "collected_time": collected_time,
-                "lab_referenceid": lab_referenceid,
-                "narration": narration
-        })
+            "id": evidence_id,
+            "file_name": file_name,
+            "evidence_type": evidence_type,
+            "source": source,
+            "collection_location": collection_location,
+            "collected_date": collected_date,
+            "collected_time": collected_time,
+            "lab_referenceid": lab_referenceid,
+            "narration": narration,
+            "caseid": caseid,
+    })
+    print(biological_list)
     return render(request,'admins/adminviewadd_biologicalevidence.html', {"biologicalevidence": biological_list})
 
 def adminview_chemical_evidence(request,id):
@@ -593,10 +604,12 @@ def sentcomplaint_post(request):
     complaint=request.POST['complaint']
 
     t=Complaint()
+    t.reply = 'pending'
+    t.status = 'pending'
+    t.sendcomplaint = complaint
     t.date=datetime.datetime.now().today()
-    t.sendcomplaint=complaint
-    t.reply='pending'
-    t.status='pending'
+
+
     t.USER=Users.objects.get(AUTHUSER_id=request.user.id)
     t.save()
     return redirect('/myapp/userindex_get/')
@@ -621,10 +634,22 @@ def add_audiovisualevidence_post(request):
     file_hash = request.POST["file hash"]
     caseid = request.POST["caseid"]
 
-    fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
-    fs.save(date, file)
-    file_name = fs.url(date)
+    if media_type == 'Audio recordings':
+
+        fs = FileSystemStorage()
+        date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.mp3'
+        fs.save(date, file)
+        file_name = fs.url(date)
+
+    else:
+
+        fs = FileSystemStorage()
+        date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.mp4'
+        fs.save(date, file)
+        file_name = fs.url(date)
+
+
+
 
     try:
         tx_hash = contract.functions.addAudioevidence(file_name,media_type,duration_seconds,format,collected_from,collected_at,file_hash,caseid).transact()
@@ -701,10 +726,21 @@ def add_digitalevidence_post(request):
     preservation_time = request.POST["Preservation Time"]
     caseid = request.POST["caseid"]
 
-    fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
-    fs.save(date, file)
-    file_name = fs.url(date)
+
+
+    if file_type == 'Cctv footage':
+        fs = FileSystemStorage()
+        date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.mp4'
+        fs.save(date, file)
+        file_name = fs.url(date)
+
+    else:
+        fs = FileSystemStorage()
+        date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
+        fs.save(date, file)
+        file_name = fs.url(date)
+
+
 
     try:
         tx_hash = contract.functions.addDigitalevidence(file_name,file_type,file_size,hash_value,collected_source,collected_time,preservation_time,caseid,).transact()

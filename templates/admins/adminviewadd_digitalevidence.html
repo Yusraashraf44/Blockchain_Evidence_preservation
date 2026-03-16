@@ -35,7 +35,20 @@
           {% for i in digitalevidence %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td><img src="{{ i.file_name }}" height="100" width="100"></td>
+              <td>
+                {% if i.file_type == 'Cctv footage' %}
+                    <video width="220" height="150" controls>
+                        <source src="{{ i.file_name }}" type="video/{{ i.format }}">
+                        Your browser does not support video.
+                    </video>
+
+                {% else %}
+
+                <a href="{{ i.file_name }}" class="btn btn-success">View</a>
+
+                {% endif %}
+            </td>
+
             <td>{{ i.file_type }}</td>
             <td>{{ i.file_size }}</td>
             <td>{{ i.hash_value }}</td>
