@@ -1,55 +1,185 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>HTML Codex - Login Form Template</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Login Form Template" name="keywords">
-        <meta content="Login Form Template" name="description">
+<head>
+    <meta charset="UTF-8">
+    <title>Evidence Preservation - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Favicon -->
-        <link href="/static/login/img/favicon.ico" rel="icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-        <!-- Stylesheet -->
-        <link href="/static/login/css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="wrapper login-1">
-            <div class="container">
-                <div class="col-left">
-                    <div class="login-text">
-                        <h2>Welcome Back</h2>
-                        <p>Create your account.</p><br>
-                        <a class="btn" href="">Sign Up</a>
-                    </div>
-                </div>
-                <div class="col-right">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <form method="post" action="/myapp/login_post/">
-                            {% csrf_token %}
-                            <p>
-                                <label>Username or email address<span>*</span></label>
-                                <input type="text" placeholder="Username or Email" name="username" required>
-                            </p>
-                            <p>
-                                <label>Password<span>*</span></label>
-                                <input type="password" placeholder="Password" name="password" required>
-                            </p>
-                            <p>
-                                <input type="submit" value="Sign In" />
-                            </p>
-                            <p>
-                                <a href="">Forget Password?</a>
-                            </p>
-                        </form>
-                        {% for i in messages %}
-                        {{ i }}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
 
-            </div>
-        </div>
-    </body>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)),
+                        url('https://www.transparenttextures.com/patterns/grey-wash-wall.png');
+            background-color: #cce7ff; /* Light Blue */
+            background-repeat: repeat;
+            color: #333;
+        }
+
+        .login-wrapper {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            display: flex;
+            max-width: 900px;
+            width: 90%;
+            overflow: hidden;
+        }
+
+        .col-left, .col-right {
+            flex: 1;
+            padding: 40px;
+        }
+
+        /* Left Column */
+        .col-left {
+            background-color: #5dade2; /* Light Blue accent */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .col-left h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .col-left p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .col-left .btn {
+            text-decoration: none;
+            padding: 12px 30px;
+            background-color: #2e86c1; /* Darker blue for button */
+            color: #fff;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .col-left .btn:hover {
+            background-color: #1b4f72;
+        }
+
+        /* Right Column */
+        .col-right h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #1b262c;
+        }
+
+        .login-form label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-form input[type="text"]:focus,
+        .login-form input[type="password"]:focus {
+            border-color: #5dade2;
+            outline: none;
+        }
+
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #5dade2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-form input[type="submit"]:hover {
+            background-color: #2e86c1;
+        }
+
+        .login-form a {
+            display: block;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #5dade2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-form a:hover {
+            color: #2e86c1;
+        }
+
+        @media(max-width: 768px) {
+            .login-wrapper {
+                flex-direction: column;
+            }
+            .col-left, .col-right {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-wrapper">
+    <!-- Left column -->
+    <div class="col-left">
+        <h2>Welcome Back</h2>
+        <p>Securely access your Evidence Preservation account.</p>
+        <a href="/myapp/register/" class="btn">Sign Up</a>
+    </div>
+
+    <!-- Right column -->
+    <div class="col-right">
+        <h2>Login</h2>
+        <form method="post" action="/myapp/login_post/" class="login-form">
+            {% csrf_token %}
+            <label>Username or Email <span>*</span></label>
+            <input type="text" name="username" placeholder="Username or Email" required>
+
+            <label>Password <span>*</span></label>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <input type="submit" value="Sign In">
+
+            <a href="/myapp/forgot_password/">Forgot Password?</a>
+        </form>
+        {% for i in messages %}
+            <div style="margin-top:10px;color:red;">{{ i }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
 </html>

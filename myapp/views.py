@@ -13,7 +13,6 @@ from django.shortcuts import render, redirect
 from myapp.blockchain import contract, w3
 from myapp.models import Complaint, Users, Case, Assigncase
 
-
 def login_get(request):
     return render(request,'login1.html')
 def login_post(request):
@@ -55,9 +54,7 @@ def adminhome_get(request):
 
 # def loginindex
 
-def viewcomplaint_get(request):
-    data=Complaint.objects.all()
-    return render(request,'admins/viewcomplaint.html',{'data':data})
+
 
 def viewevidence_get(request):
     # a=Evidence.objects.all()
@@ -85,25 +82,27 @@ def changepassword_post(request):
     data.save()
     return redirect('/myapp/login_get/')
 
-
-
+def viewcomplaint_get(request):
+    data=Complaint.objects.all()
+    return render(request,'admins/viewcomplaint.html',{'data':data})
 
 
 def sentreply_get(request,id):
-    return render(request,'admins/sentreply.html',{'id':id})
-
+    data = Complaint.objects.get(id=id)
+    return render(request,'admins/sentreply.html',{'data':data})
 def sentreply_post(request):
-    reply=request.POST['reply']
-    id=request.POST['id']
-    c=Complaint.objects.get(id=id)
-    c.reply=reply
-    c.status='replied'
-    c.save()
-    return redirect('myapp/viewcomplaint_get/')
+    cid = request.POST['id']
+    reply = request.POST['reply']
 
-def viewcomplaint_get(request):
-    c=Complaint.objects.all()
-    return render(request,'admins/viewcomplaint_get/',{'c':c})
+    data = Complaint.objects.get(id=cid)
+    data.reply = reply
+    data.status = "replied"
+    data.save()
+
+    return redirect("/myapp/viewcomplaint_get/")
+
+
+
 
 def addstaff_get(request):
     return render(request,'admins/addstaff.html')
@@ -553,8 +552,10 @@ def adminview_trace_evidence(request,id):
 #     return render(request,'users/viewassigncase.html')
 
 def viewassigncase_post(request):
-    data=Assigncase.objects.filter(USERS__AUTHUSER=request.user)
+    data = Assigncase.objects.filter(USERS__AUTHUSER=request.user)
     return render(request,'users/viewassigncase.html',{'data':data})
+
+
 
 
 def userindex_get(request):
@@ -607,19 +608,26 @@ def sentcomplaint_post(request):
     t.reply = 'pending'
     t.status = 'pending'
     t.sendcomplaint = complaint
-    t.date=datetime.datetime.now().today()
+    t.date = datetime.datetime.now()
 
 
     t.USER=Users.objects.get(AUTHUSER_id=request.user.id)
     t.save()
-    return redirect('/myapp/userindex_get/')
+    return redirect('/myapp/viewreply_get/')
 
 
-def user_viewcomplaint_get(request):
-    return render(request,'users/viewcomplaint.html')
+# def user_viewcomplaint_get(request):
+#     return render(request,'users/viewcomplaint.html')
+
+def viewreply_get(request):
+    a=Complaint.objects.filter(USER__AUTHUSER=request.user)
+    return render(request,'users/viewreply.html',{'data':a})
+
+
 
 def viewprofile_get(request):
-    return render(request,'users/viewprofile.html')
+    data=Users.objects.get(AUTHUSER_id=request.user.id)
+    return render(request,'users/viewprofile.html',{'data':data})
 
 def add_audiovisualevidence_get(request,id):
     return render(request,'users/add_audiovisualevidence.html',{'id':id})

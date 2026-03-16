@@ -59,7 +59,7 @@
             <div class="container">
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
                     <a href="index.html" class="navbar-brand">
-                        <h1 class="text-white fw-bold d-block">High<span class="text-secondary">Tech</span> </h1>
+                        <h1 class="text-white fw-bold d-block">Evidence<span class="text-secondary">Preservation</span> </h1>
                     </a>
                     <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -102,7 +102,7 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Complaint</a>
                             <div class="dropdown-menu">
                                 <a href="/myapp/sentcomplaint_get/" class="dropdown-item">Send Complaint</a>
-                                <a href="/myapp/user_viewcomplaint_get/" class="dropdown-item">View Complaint</a>
+                                <a href="/myapp/viewreply_get/" class="dropdown-item">View Reply</a>
                             </div>
                         </div>
                             <a href="/myapp/forgotpassword_get" class="nav-item nav-link">Password</a>
@@ -114,6 +114,9 @@
 
         </div>
         <!-- Navbar End -->
+        <!-- Navbar End -->
+
+{% block body %}
 
         <!-- Carousel Start -->
         <div class="container-fluid px-0">
@@ -554,7 +557,7 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-secondary btn-square rounded-circle back-to-top"><i class="fa fa-arrow-up text-white"></i></a>
 
-        
+        {% endblock %}
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

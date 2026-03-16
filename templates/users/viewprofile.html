@@ -1,85 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Registration Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-</head>
-<body>
-  <div class="container">
-    <h2 class="mb-4">View Profile</h2>
-    <form>
-      <div class="row mb-3">
-        <label for="name" class="col-sm-4 ">Name</label>
-        <div class="col-sm-8">
-        </div>
+{% extends "users/userindex.html" %}
+{% block body %}
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">My Profile</h4>
       </div>
-
-      <div class="row mb-3">
-        <label class="col-sm-4 ">Gender</label>
-        <div class="col-sm-8">
-          <div class="form-check form-check-inline">
-
+      <div class="card-body">
+        <div class="row">
+          <!-- Profile Picture -->
+          <div class="col-md-4 text-center">
+            <img src="{{ data.photo.url }}" alt="Profile Photo" class="rounded-circle img-thumbnail mb-3">
+            <h5 class="mt-2">{{ data.name }}</h5>
 
           </div>
-          <div class="form-check form-check-inline">
+
+          <!-- Profile Details -->
+          <div class="col-md-8">
+            <table class="table table-borderless">
+{#                 <tr>#}
+{#                <th>photo:</th>#}
+{#                <td><img src="{{ data.photo }}" height="100px" width="100px"></td>#}
+{#              </tr>#}
+              <tr>
+                <th> Name:</th>
+                <td>{{ data.name }}</td>
+              </tr>
+                <tr>
+                <th> Gender:</th>
+                <td>{{ data.gender }}</td>
+              </tr>
+                <tr>
+                <th> Date of Birth:</th>
+                <td>{{ data.dob }}</td>
+              </tr>
+              <tr>
+                <th>Email:</th>
+                <td>{{ data.email }}</td>
+              </tr>
+              <tr>
+                <th>Phone:</th>
+                <td>{{ data.phone }}</td>
+              </tr>
+
+
+
+
+
+
+            </table>
 
           </div>
-             <div class="form-check form-check-inline">
-
-          </div>
         </div>
       </div>
-
-      <div class="row mb-3">
-        <label for="dob" class="col-sm-4 ">Date of Birth</label>
-        <div class="col-sm-8">
-
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="email" class="col-sm-4 ">Email address</label>
-        <div class="col-sm-8">
-
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="phone" class="col-sm-4 ">Phone Number</label>
-        <div class="col-sm-8">
-
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="place" class="col-sm-4 ">Place</label>
-        <div class="col-sm-8">
-
-        </div>
-      </div>
-
-
-
-
-      <div class="row mb-3">
-        <label for="photo" class="col-sm-4 ">Photo</label>
-        <div class="col-sm-8">
-
-        </div>
-      </div>
-
-
-
-
-      <div class="row mb-3">
-        <div class="offset-sm-4 col-sm-8">
-          <button type="submit" class="btn btn-primary">Edit</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
+
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

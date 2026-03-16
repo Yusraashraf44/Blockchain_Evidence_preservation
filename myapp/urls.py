@@ -28,7 +28,7 @@ urlpatterns = [
     path('viewuser_get/', views.viewuser_get),
     path('changepassword_get/', views.changepassword_get),
     path('changepassword_post/', views.changepassword_post),
-    path('sentreply_get/', views.sentreply_get),
+    path('sentreply_get/<int:id>/', views.sentreply_get),
     path('sentreply_post/', views.sentreply_post),
     path('adminhome_get/', views.adminhome_get),
     path('assigncase_get/', views.assigncase_get),
@@ -58,7 +58,12 @@ urlpatterns = [
     path('register_post/', views.register_post),
     path('sentcomplaint_get/', views.sentcomplaint_get),
     path('sentcomplaint_post/', views.sentcomplaint_post),
-    path('user_viewcomplaint_get/', views.user_viewcomplaint_get),
+    # path('user_viewcomplaint_get/', views.user_viewcomplaint_get),
+    path('viewreply_get/', views.viewreply_get),
+    # path('sentcomplaint_get/', views.sentcomplaint_get),
+    # path('sentcomplaint_post/', views.sentcomplaint_post),
+
+
     path('viewprofile_get/', views.viewprofile_get),
     path('add_audiovisualevidence_get/<id>',views.add_audiovisualevidence_get),
     path('add_audiovisualevidence_post/',views.add_audiovisualevidence_post),
