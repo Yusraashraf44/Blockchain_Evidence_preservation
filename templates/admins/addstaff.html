@@ -1,132 +1,155 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Add Staff</title>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
-
-body{
-background:#eef2f7;
-font-family:Arial, Helvetica, sans-serif;
+body {
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  font-family: 'Segoe UI', sans-serif;
+  color: #f1f5f9;
+  padding-top: 40px;
+  min-height: 100vh;
 }
 
-/* Center box */
-.form-box{
-width:650px;
-margin:auto;
-margin-top:80px;
-background:white;
-padding:35px;
-border-radius:10px;
-border:1px solid #dcdcdc;
-box-shadow:0px 5px 15px rgba(0,0,0,0.15);
+.container {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+  margin: auto;
+  color: #e2e8f0;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Title */
-.form-title{
-text-align:center;
-margin-bottom:25px;
-color:#0d6efd;
-font-weight:600;
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffffff;
+  font-weight: 700;
 }
 
-/* Labels */
-label{
-font-weight:500;
+label {
+  font-weight: 500;
+  color: #cbd5e1;
 }
 
-/* Inputs */
-.form-control{
-border-radius:6px;
+label::after {
+  content: " *";
+  color: #f87171;
 }
 
-/* Button */
-.btn-primary{
-width:100%;
-padding:10px;
-font-size:16px;
+.form-control {
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
 }
 
+.form-control:focus {
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.4);
+  border-color: #38bdf8;
+}
+
+.form-check-label {
+  color: #cbd5e1;
+}
+
+.btn-primary {
+  background-color: #38bdf8;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  color: #0f172a;
+}
+
+.btn-primary:hover {
+  background-color: #0ea5e9;
+  color: #ffffff;
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 20px;
+  }
+
+  label {
+    text-align: left !important;
+  }
+}
 </style>
-
 </head>
-
 <body>
-
-<div class="form-box">
-
-<h3 class="form-title">Add Staff</h3>
-
+<div class="container">
+<h2>Add Staff</h2>
 <form method="post" action="/myapp/addstaff_post/" enctype="multipart/form-data">
-{% csrf_token %}
+  {% csrf_token %}
 
-<div class="row mb-3">
-<label for="name" class="col-sm-4">Name</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" id="name" name="name" required>
-</div>
-</div>
+  <div class="row mb-3">
+    <label for="name" class="col-sm-4 col-form-label">Name</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+  </div>
 
-<div class="row mb-3">
-<label class="col-sm-4">Gender</label>
-<div class="col-sm-8">
+  <div class="row mb-3">
+    <label class="col-sm-4 col-form-label">Gender</label>
+    <div class="col-sm-8">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="male" name="gender" id="male" required>
+        <label class="form-check-label" for="male">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="female" name="gender" id="female">
+        <label class="form-check-label" for="female">Female</label>
+      </div>
+    </div>
+  </div>
 
-<div class="form-check form-check-inline">
-<input class="form-check-input" type="radio" value="male" name="gender" id="male" required>
-<label class="form-check-label" for="male">Male</label>
-</div>
+  <div class="row mb-3">
+    <label for="dob" class="col-sm-4 col-form-label">Date of Birth</label>
+    <div class="col-sm-8">
+      <input type="date" class="form-control" id="dob" name="dob" required>
+    </div>
+  </div>
 
-<div class="form-check form-check-inline">
-<input class="form-check-input" type="radio" value="female" name="gender" id="female">
-<label class="form-check-label" for="female">Female</label>
-</div>
+  <div class="row mb-3">
+    <label for="email" class="col-sm-4 col-form-label">Email Address</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+  </div>
 
-</div>
-</div>
+  <div class="row mb-3">
+    <label for="phone" class="col-sm-4 col-form-label">Phone Number</label>
+    <div class="col-sm-8">
+      <input type="tel" pattern="[0-9]{10}" class="form-control" id="phone" name="phone" required>
+    </div>
+  </div>
 
-<div class="row mb-3">
-<label for="dob" class="col-sm-4">Date of Birth</label>
-<div class="col-sm-8">
-<input type="date" class="form-control" id="dob" name="dob" required>
-</div>
-</div>
+  <div class="row mb-3">
+    <label for="photo" class="col-sm-4 col-form-label">Upload Photo</label>
+    <div class="col-sm-8">
+      <input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
+    </div>
+  </div>
 
-<div class="row mb-3">
-<label for="email" class="col-sm-4">Email Address</label>
-<div class="col-sm-8">
-<input type="email" class="form-control" id="email" name="email" required>
-</div>
-</div>
-
-<div class="row mb-3">
-<label for="phone" class="col-sm-4">Phone Number</label>
-<div class="col-sm-8">
-<input type="tel" pattern="[0-9]{10}" class="form-control" id="phone" name="phone" required>
-</div>
-</div>
-
-<div class="row mb-3">
-<label for="photo" class="col-sm-4">Upload Photo</label>
-<div class="col-sm-8">
-<input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
-</div>
-</div>
-
-<div class="row">
-<div class="offset-sm-4 col-sm-8">
-<button type="submit" class="btn btn-primary">Register</button>
-</div>
-</div>
+  <div class="row mb-3">
+    <div class="offset-sm-4 col-sm-8">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+  </div>
 
 </form>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

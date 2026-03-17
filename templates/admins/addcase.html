@@ -1,233 +1,251 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Case Form</title>
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
-
-body{
-background:linear-gradient(135deg,#eef2f7,#dbeafe);
-font-family:Segoe UI, Arial, sans-serif;
+body {
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #f1f5f9;
+  padding-top: 40px;
+  min-height: 100vh;
 }
 
-/* Main Form Box */
-.case-box{
-max-width:900px;
-margin:auto;
-margin-top:60px;
-background:white;
-padding:40px;
-border-radius:12px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
+/* Main Form Container */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px;
+  border-radius: 16px;
+  background-color: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 /* Title */
-.form-title{
-text-align:center;
-color:#0d6efd;
-font-weight:600;
-margin-bottom:30px;
+h2 {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 30px;
 }
 
 /* Labels */
-label{
-font-weight:500;
-color:#333;
+label {
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+label::after {
+  content: " *";
+  color: #f87171;
 }
 
 /* Inputs */
-.form-control{
-border-radius:6px;
-padding:10px;
+.form-control {
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  background-color: rgba(255,255,255,0.9);
+  color: #0f172a;
 }
 
-/* Input focus */
-.form-control:focus{
-border-color:#0d6efd;
-box-shadow:0 0 5px rgba(13,110,253,0.4);
+.form-control:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56,189,248,0.4);
 }
 
 /* Button */
-.btn-primary{
-width:200px;
-padding:10px;
-font-size:16px;
-border-radius:6px;
+.btn-primary {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #38bdf8;
+  border: none;
+  color: #0f172a;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0ea5e9;
+  color: #ffffff;
 }
 
 /* Row spacing */
-.row{
-margin-bottom:12px;
+.row {
+  margin-bottom: 12px;
 }
 
+@media (max-width: 576px) {
+  .container {
+    padding: 20px;
+  }
+}
 </style>
-
 </head>
-
 <body>
 
-<div class="case-box">
-
-<h2 class="form-title">Case Form</h2>
+<div class="container">
+<h2>Case Form</h2>
 
 <form method="post" action="/myapp/addcase_post/">
-{% csrf_token %}
+  {% csrf_token %}
 
-<div class="row">
-<label class="col-sm-4">Case ID</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="caseid" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Case ID</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="caseid" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Case Title</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="case_title" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Case Title</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="case_title" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Case Type</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="case_type" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Case Type</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="case_type" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Date of Incident</label>
-<div class="col-sm-8">
-<input type="date" class="form-control" name="date_of_incident" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Date of Incident</label>
+    <div class="col-sm-8">
+      <input type="date" class="form-control" name="date_of_incident" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Case Description</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="case_description" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Case Description</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="case_description" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Date Filed</label>
-<div class="col-sm-8">
-<input type="date" class="form-control" name="date_filed" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Date Filed</label>
+    <div class="col-sm-8">
+      <input type="date" class="form-control" name="date_filed" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner Name</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="petitioner_name" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner Name</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="petitioner_name" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner Email</label>
-<div class="col-sm-8">
-<input type="email" class="form-control" name="petitioner_email" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner Email</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control" name="petitioner_email" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner Phone</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="petitioner_phone" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner Phone</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="petitioner_phone" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner Place</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="petitioner_place" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner Place</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="petitioner_place" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner Pincode</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="petitioner_pincode" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner Pincode</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="petitioner_pincode" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner District</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="petitioner_district" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner District</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="petitioner_district" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Petitioner State</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="petitioner_state" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Petitioner State</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="petitioner_state" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Accused</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="accused" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Accused</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="accused" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Filing Mode</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="filing_mode" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Filing Mode</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="filing_mode" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Court Name</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="court_name" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Court Name</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="court_name" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Judge Assigned</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="judge_assigned" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Judge Assigned</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="judge_assigned" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Priority</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="priority" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Priority</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="priority" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Remarks</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="remarks" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Remarks</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="remarks" required>
+    </div>
+  </div>
 
-<div class="row">
-<label class="col-sm-4">Case Duration Days</label>
-<div class="col-sm-8">
-<input type="text" class="form-control" name="case_duration_days" required>
-</div>
-</div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Case Duration Days</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="case_duration_days" required>
+    </div>
+  </div>
 
-<div class="row">
-<div class="offset-sm-4 col-sm-8">
-<button type="submit" class="btn btn-primary">Add Case</button>
-</div>
-</div>
+  <div class="row">
+    <div class="offset-sm-4 col-sm-8">
+      <button type="submit" class="btn btn-primary">Add Case</button>
+    </div>
+  </div>
 
 </form>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

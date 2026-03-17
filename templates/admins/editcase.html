@@ -1,155 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Registration Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
- 
+<meta charset="UTF-8">
+<title>Edit Case</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  font-family: 'Segoe UI', sans-serif;
+  color: #f1f5f9;
+  padding-top: 40px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px;
+  border-radius: 16px;
+  background-color: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+label {
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+label::after {
+  content: " *";
+  color: #f87171;
+}
+
+.form-control {
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  background-color: rgba(255,255,255,0.9);
+  color: #0f172a;
+}
+
+.form-control:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56,189,248,0.4);
+}
+
+.btn-primary {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #38bdf8;
+  border: none;
+  color: #0f172a;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0ea5e9;
+  color: #ffffff;
+}
+
+.row {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 20px;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h2 class="mb-4">Edit Case</h2>
-   <form method="post" action="/myapp/editcase_post/" enctype="multipart/form-data">
-           {% csrf_token %}
-   <input type="hidden" value="{{ d.id }}" name="id">
-      <div class="row mb-3">
-        <label for="case_number" class="col-sm-4 "> case_number </label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="case_number" value="{{ d.case_number }}" name="case_number" required>
-        </div>
-      </div>
 
+<div class="container">
+<h2>Edit Case</h2>
 
+<form method="post" action="/myapp/editcase_post/">
+  {% csrf_token %}
+  <input type="hidden" value="{{ d.id }}" name="id">
 
-      <div class="row mb-3">
-        <label for="case_title" class="col-sm-4 ">case_title</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="case_title" name="case_title" value="{{ d.case_title  }}" required>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="case_type" class="col-sm-4 ">case_type</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="case_type" name="case_type" value="{{ d.case_type }}" required>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="date_of_incident" class="col-sm-4 ">date_of_incident</label>
-        <div class="col-sm-8">
-          <input type="date"  class="form-control" id="date_of_incident" value="{{ d.date_of_incident | date:'Y-m-d' }}" name="date_of_incident" required>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="case_description" class="col-sm-4 ">case_description</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="case_description" name="case_description" value="{{ d.case_description }}" required>
-        </div>
-      </div>
-    <div class="row mb-3">
-        <label for="date_filed" class="col-sm-4 ">date_filed</label>
-        <div class="col-sm-8">
-          <input type="date"  class="form-control" id="date_filed" value="{{ d.date_filed | date:'Y-m-d' }}" name="date_filed" required>
-        </div>
-      </div>
-         <div class="row mb-3">
-        <label for="petitioner_name" class="col-sm-4 ">petitioner_name</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="petitioner_name" name="petitioner_name" value="{{ d.petitioner_name }}" required>
-        </div>
-      </div>
-       <div class="row mb-3">
-        <label for="email" class="col-sm-4 ">petitioner_email</label>
-        <div class="col-sm-8">
-          <input type="email" class="form-control" id="email" name="petitioner_email" value="{{ d.petitioner_email }}" required>
-        </div>
-      </div>
-       <div class="row mb-3">
-        <label for="phone" class="col-sm-4 ">petitioner_phone</label>
-        <div class="col-sm-8">
-          <input type="tel" pattern="[0-9]{10}" class="form-control" id="phone" value="{{ d.petitioner_phone }}" name="petitioner_phone" required>
-        </div>
-      </div>
-
-       <div class="row mb-3">
-        <label for="phone" class="col-sm-4 ">petitioner_place</label>
-        <div class="col-sm-8">
-          <input type="text"  class="form-control" id="petitioner_place" value="{{ d.petitioner_place }}" name="petitioner_place" required>
-        </div>
-      </div>
-       <div class="row mb-3">
-        <label for="phone" class="col-sm-4 ">petitioner_pincode</label>
-        <div class="col-sm-8">
-          <input type="tel" pattern="[0-9]{6}" class="form-control" id="petitioner_pincode" value="{{ d.petitioner_pincode }}" name="petitioner_pincode" required>
-        </div>
-      </div>
-        <div class="row mb-3">
-        <label for="petitioner_district" class="col-sm-4 ">petitioner_district</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="petitioner_district" name="petitioner_district" value="{{ d.petitioner_district }}" required>
-        </div>
-      </div>
-         <div class="row mb-3">
-        <label for="petitioner_district" class="col-sm-4 ">petitioner_state</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="petitioner_state" name="petitioner_state" value="{{ d.petitioner_state }}" required>
-        </div>
-      </div>
-       <div class="row mb-3">
-        <label for="accused" class="col-sm-4 ">accused</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="accused" name="accused" value="{{ d.accused }}" required>
-        </div>
-      </div>
-         <div class="row mb-3">
-        <label for="accused" class="col-sm-4 ">filing_mode</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="filing_mode" name="filing_mode" value="{{ d.filing_mode }}" required>
-        </div>
-      </div>
-        <div class="row mb-3">
-        <label for="court_name" class="col-sm-4 ">court_name</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="court_name" name="court_name" value="{{ d.court_name }}" required>
-        </div>
-      </div>
-        <div class="row mb-3">
-        <label for="judge_assigned" class="col-sm-4 ">judge_assigned</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="judge_assigned" name="judge_assigned" value="{{ d.judge_assigned }}" required>
-        </div>
-      </div>
-         <div class="row mb-3">
-        <label for="priority" class="col-sm-4 ">priority</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="priority" name="priority" value="{{ d.priority }}" required>
-        </div>
-      </div>
-         <div class="row mb-3">
-        <label for="remarks" class="col-sm-4 ">remarks</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="remarks" name="remarks" value="{{ d.remarks }}" required>
-        </div>
-      </div>
-         <div class="row mb-3">
-        <label for="case_duration_days" class="col-sm-4 ">case_duration_days</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" id="case_duration_days" name="case_duration_days" value="{{ d.case_duration_days }}" required>
-        </div>
-      </div>
-
-
-
-
-      <div class="row mb-3">
-        <div class="offset-sm-4 col-sm-8">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </div>
-    </form>
+  <div class="row mb-3">
+    <label for="case_number" class="col-sm-4 col-form-label">Case Number</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="case_number" value="{{ d.case_number }}" name="case_number" required>
+    </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <div class="row mb-3">
+    <label for="case_title" class="col-sm-4 col-form-label">Case Title</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="case_title" name="case_title" value="{{ d.case_title }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="case_type" class="col-sm-4 col-form-label">Case Type</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="case_type" name="case_type" value="{{ d.case_type }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="date_of_incident" class="col-sm-4 col-form-label">Date of Incident</label>
+    <div class="col-sm-8">
+      <input type="date" class="form-control" id="date_of_incident" value="{{ d.date_of_incident | date:'Y-m-d' }}" name="date_of_incident" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="case_description" class="col-sm-4 col-form-label">Case Description</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="case_description" name="case_description" value="{{ d.case_description }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="date_filed" class="col-sm-4 col-form-label">Date Filed</label>
+    <div class="col-sm-8">
+      <input type="date" class="form-control" id="date_filed" value="{{ d.date_filed | date:'Y-m-d' }}" name="date_filed" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_name" class="col-sm-4 col-form-label">Petitioner Name</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="petitioner_name" name="petitioner_name" value="{{ d.petitioner_name }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_email" class="col-sm-4 col-form-label">Petitioner Email</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control" id="petitioner_email" name="petitioner_email" value="{{ d.petitioner_email }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_phone" class="col-sm-4 col-form-label">Petitioner Phone</label>
+    <div class="col-sm-8">
+      <input type="tel" pattern="[0-9]{10}" class="form-control" id="petitioner_phone" value="{{ d.petitioner_phone }}" name="petitioner_phone" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_place" class="col-sm-4 col-form-label">Petitioner Place</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="petitioner_place" value="{{ d.petitioner_place }}" name="petitioner_place" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_pincode" class="col-sm-4 col-form-label">Petitioner Pincode</label>
+    <div class="col-sm-8">
+      <input type="tel" pattern="[0-9]{6}" class="form-control" id="petitioner_pincode" value="{{ d.petitioner_pincode }}" name="petitioner_pincode" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_district" class="col-sm-4 col-form-label">Petitioner District</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="petitioner_district" name="petitioner_district" value="{{ d.petitioner_district }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="petitioner_state" class="col-sm-4 col-form-label">Petitioner State</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="petitioner_state" name="petitioner_state" value="{{ d.petitioner_state }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="accused" class="col-sm-4 col-form-label">Accused</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="accused" name="accused" value="{{ d.accused }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="filing_mode" class="col-sm-4 col-form-label">Filing Mode</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="filing_mode" name="filing_mode" value="{{ d.filing_mode }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="court_name" class="col-sm-4 col-form-label">Court Name</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="court_name" name="court_name" value="{{ d.court_name }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="judge_assigned" class="col-sm-4 col-form-label">Judge Assigned</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="judge_assigned" name="judge_assigned" value="{{ d.judge_assigned }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="priority" class="col-sm-4 col-form-label">Priority</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="priority" name="priority" value="{{ d.priority }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="remarks" class="col-sm-4 col-form-label">Remarks</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="remarks" name="remarks" value="{{ d.remarks }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="case_duration_days" class="col-sm-4 col-form-label">Case Duration Days</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="case_duration_days" name="case_duration_days" value="{{ d.case_duration_days }}" required>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="offset-sm-4 col-sm-8">
+      <button type="submit" class="btn btn-primary">Update Case</button>
+    </div>
+  </div>
+
+</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,156 +1,142 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>View Staff</title>
-
-<!-- Bootstrap CSS -->
-
+<title>Registered Staff</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- DataTables CSS -->
-
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-
 <style>
-
-body{
-background:linear-gradient(135deg,#eef2f7,#dbeafe);
-font-family:Segoe UI, Arial, sans-serif;
+body {
+  background-color: #f8fafc; /* light gray/white shade */
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+  padding: 40px 0;
+  min-height: 100vh;
 }
 
-/* Card Container */
-.table-container{
-max-width:1100px;
-margin:auto;
-margin-top:60px;
-background:white;
-padding:35px;
-border-radius:12px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
+/* Container */
+.table-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 35px;
+  border-radius: 12px;
+  background-color: #ffffff; /* pure white */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* subtle shadow */
+  border: 1px solid #e2e8f0; /* soft border */
 }
 
-/* Page Title */
-.page-title{
-text-align:center;
-color:#0d6efd;
-font-weight:600;
-margin-bottom:25px;
+/* Title */
+.page-title {
+  text-align: center;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 30px;
 }
 
 /* Table Header */
-table thead{
-background:#0d6efd;
-color:white;
+table.dataTable thead {
+  background-color: #38bdf8; /* blue header */
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Table Body */
+table.dataTable tbody tr {
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
 /* Staff Image */
-.staff-photo{
-border-radius:6px;
-width:60px;
+.staff-photo {
+  border-radius: 8px;
+  width: 60px;
 }
 
 /* Buttons */
-.btn-edit{
-background:#ffc107;
-border:none;
-color:black;
+.btn-edit {
+  background-color: #38bdf8;
+  border: none;
+  color: #0f172a;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-weight: 500;
 }
 
-.btn-edit:hover{
-background:#e0a800;
+.btn-edit:hover {
+  background-color: #0ea5e9;
+  color: #ffffff;
 }
 
-.btn-delete{
-background:#dc3545;
-border:none;
-color:white;
+.btn-delete {
+  background-color: #ef4444;
+  border: none;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-weight: 500;
 }
 
-.btn-delete:hover{
-background:#bb2d3b;
+.btn-delete:hover {
+  background-color: #dc2626;
 }
 
+/* Responsive padding */
+@media (max-width: 576px) {
+  .table-container {
+    padding: 20px;
+  }
+}
 </style>
-
 </head>
-
 <body>
 
 <div class="table-container">
+  <h2 class="page-title">Registered Staff</h2>
 
-<h2 class="page-title">Registered Staff</h2>
-
-<table id="registrationTable" class="table table-striped table-bordered">
-
-<thead>
-<tr>
-<th>#</th>
-<th>Name</th>
-<th>Gender</th>
-<th>DOB</th>
-<th>Email</th>
-<th>Phone</th>
-<th>Photo</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody>
-
-{% for i in data %}
-
-<tr>
-<td>{{ forloop.counter }}</td>
-<td>{{ i.name }}</td>
-<td>{{ i.gender }}</td>
-<td>{{ i.dob }}</td>
-<td>{{ i.email }}</td>
-<td>{{ i.phone }}</td>
-
-<td>
-<img src="{{ i.photo }}" class="staff-photo">
-</td>
-
-<td>
-
-<a href="/myapp/editstaff_get/{{ i.id }}" class="btn btn-edit btn-sm">Edit</a>
-
-<a href="/myapp/deletestaff_get/{{ i.AUTHUSER.id }}" class="btn btn-delete btn-sm">Delete</a>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
+  <table id="registrationTable" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>DOB</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Photo</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.gender }}</td>
+        <td>{{ i.dob }}</td>
+        <td>{{ i.email }}</td>
+        <td>{{ i.phone }}</td>
+        <td><img src="{{ i.photo }}" class="staff-photo"></td>
+        <td>
+          <a href="/myapp/editstaff_get/{{ i.id }}" class="btn btn-edit btn-sm">Edit</a>
+          <a href="/myapp/deletestaff_get/{{ i.AUTHUSER.id }}" class="btn btn-delete btn-sm">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
-<!-- Scripts -->
-
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
 <script>
-
 $(document).ready(function () {
-
-$('#registrationTable').DataTable({
-pageLength:5,
-lengthMenu:[5,10,25,50],
-ordering:true
+  $('#registrationTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [5, 10, 25, 50],
+    ordering: true
+  });
 });
-
-});
-
 </script>
 
 </body>
