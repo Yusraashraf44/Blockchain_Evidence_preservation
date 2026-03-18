@@ -38,7 +38,6 @@ def login_post(request):
 def logout_get(request):
     logout(request)
     return redirect('/myapp/login_get/')
-
 def forgotpassword_get(request):
     return render(request,'forgotpassword.html')
 def forgotpassword_post(request):
@@ -580,20 +579,20 @@ def edit_get(request):
 def edit_post(request):
     return render(request,'users/edit.html')
 
-def forgotpassword_get(request):
-    return render(request,'users/forgotpassword.html')
+def userchangepassword_get(request):
+    return render(request,'users/userchangepassword.html')
 
-def forgotpassword_post(request):
+def userchangepassword_post(request):
     current_password = request.POST['currentpassword']
     confirm_password = request.POST['confirmpassword']
     new_password = request.POST['newpassword']
     data = request.user
     if not data.check_password(current_password):
         messages.error(request, 'invalid password')
-        return redirect('/myapp/forgotpassword_get/')
+        return redirect('/myapp/userchangepassword_get/')
     if new_password != confirm_password:
         messages.error(request, 'Password not match')
-        return redirect('/myapp/forgotpassword_get/')
+        return redirect('/myapp/userchangepassword_get/')
 
     data.set_password(new_password)
     data.save()

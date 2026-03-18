@@ -1,147 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Registration Data Table</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- DataTables CSS -->
-  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Assigned Cases</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- DataTables CSS -->
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+<style>
+/* Body styling */
+body {
+    background-color: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 30px 0;
+    font-size: 1.1rem;
+}
+
+/* Title */
+.container h2 {
+    text-align: center;
+    color: #0f172a;
+    font-weight: 600;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Table styling */
+.table {
+    border-collapse: separate !important;
+    border-spacing: 0 6px;
+    font-size: 1.05rem;
+}
+
+thead th {
+    background-color: #0d6efd;
+    color: #fff;
+    text-align: center;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 6px 6px 0 0;
+}
+
+tbody td {
+    background-color: #ffffff;
+    vertical-align: middle;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    text-align: left;
+}
+
+/* Center numeric/short columns */
+td:first-child, td:nth-child(2), td:nth-child(5) {
+    text-align: center;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: #f1f3f5;
+}
+
+tbody tr:hover td {
+    background-color: #e9ecef;
+    transition: 0.2s;
+}
+
+/* Buttons */
+.btn-custom {
+    border-radius: 5px;
+    font-size: 0.95rem;
+    padding: 6px 12px;
+    margin-bottom: 3px;
+    transition: 0.3s;
+}
+
+/* Edit / Delete Buttons */
+.btn-edit {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+}
+.btn-edit:hover { background-color: #0b5ed7; }
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+.btn-delete:hover { background-color: #b02a37; }
+
+/* Evidence Buttons */
+.btn-evidence {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    margin: 2px;
+    width: 75px;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-add { background-color: #198754; }
+.btn-add:hover { background-color: #157347; }
+
+.btn-view { background-color: #0d6efd; }
+.btn-view:hover { background-color: #0b5ed7; }
+
+/* Scrollable table for smaller screens */
+.table-responsive { overflow-x: auto; }
+
+@media (max-width: 992px) {
+    .table-responsive { overflow-x: auto; }
+}
+</style>
 </head>
 <body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Assigned case</h2>
-    <table id="registrationTable" class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>slno.</th>
-          <th>case_number</th>
-          <th>case_title</th>
-          <th>case_type</th>
-          <th>date_of_incident</th>
-          <th>case_description</th>
-          <th>date_filed</th>
-          <th>petitioner_name</th>
-          <th>petitioner_email</th>
-          <th>petitioner_phone</th>
-          <th>petitioner_place</th>
-          <th>petitioner_pincode</th>
-          <th>petitioner_district</th>
-          <th>petitioner_state</th>
-          <th>accused</th>
 
-          <th>filing_mode</th>
-          <th>court_name</th>
-          <th>judge_assigned</th>
-          <th>priority</th>
-          <th>remarks</th>
-          <th>case_duration_days</th>
-            <th>Audio_Evidence</th>
-            <th>Biological_Evidence</th>
-            <th>Chemical_Evidence</th>
-            <th>Digital_Evidence</th>
-            <th>Document_Evidence</th>
-            <th>Financialaccoundind_Evidence</th>
-            <th>Pattern_Evidence</th>
-            <th>Physical_Evidence</th>
-            <th>Trace_Evidence</th>
+<div class="container">
+    <h2>Assigned Cases</h2>
+    <div class="table-responsive">
+        <table id="casesTable" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Sl.No</th>
+                    <th>Case Number</th>
+                    <th>Case Details</th>
+                    <th>Petitioner Details</th>
+                    <th>Accused & Mode</th>
+                    <th>Court Details</th>
+                    <th>Remarks</th>
+                    <th>Add Evidence</th>
+                    <th>View Evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.CASE.case_number }}</td>
 
-        </tr>
-        </thead>
-    <tbody>
+                    <!-- Case Details -->
+                    <td>
+                        <b>Title:</b> {{ i.CASE.case_title }}<br>
+                        <b>Type:</b> {{ i.CASE.case_type }}<br>
+                        <b>Description:</b> {{ i.CASE.case_description }}<br>
+                        <b>DOI:</b> {{ i.CASE.date_of_incident }}<br>
+                        <b>DOF:</b> {{ i.CASE.date_filed }}<br>
+                        <b>Duration:</b> {{ i.CASE.case_duration_days }}
+                    </td>
 
+                    <!-- Petitioner Details -->
+                    <td>
+                        {{ i.CASE.petitioner_name }}<br>
+                        {{ i.CASE.petitioner_email }}<br>
+                        {{ i.CASE.petitioner_phone }}<br>
+                        {{ i.CASE.petitioner_place }}<br>
+                        {{ i.CASE.petitioner_pincode }}<br>
+                        {{ i.CASE.petitioner_district }}<br>
+                        {{ i.CASE.petitioner_state }}
+                    </td>
 
-        <!-- Sample Data Row -->
-           {% for i in data %}
-        <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>{{ i.CASE.case_number }}</td>
-          <td>{{ i.CASE.case_title }}</td>
-          <td>{{ i.CASE.case_type }}</td>
-          <td>{{ i.CASE.date_of_incident }}</td>
-          <td>{{ i.CASE.case_description }}</td>
-          <td>{{ i.CASE.date_filed }}</td>
-          <td>{{ i.CASE.petitioner_name }}</td>
-          <td>{{ i.CASE.petitioner_email }}</td>
-          <td>{{ i.CASE.petitioner_phone }}</td>
-          <td>{{ i.CASE.petitioner_place }}</td>
-          <td>{{ i.CASE.petitioner_pincode }}</td>
-          <td>{{ i.CASE.petitioner_district }}</td>
-          <td>{{ i.CASE.petitioner_state }}</td>
-          <td>{{ i.CASE.accused }}</td>
-          <td>{{ i.CASE.filing_mode }}</td>
-          <td>{{ i.CASE.court_name }}</td>
-          <td>{{ i.CASE.judge_assigned }}</td>
-          <td>{{ i.CASE.priority }}</td>
-          <td>{{ i.CASE.remarks }}</td>
-          <td>{{ i.CASE.case_duration_days }}</td>
+                    <!-- Accused & Filing Mode -->
+                    <td>
+                        {{ i.CASE.accused }}<br>
+                        <b>Mode:</b> {{ i.CASE.filing_mode }}
+                    </td>
 
+                    <!-- Court Details -->
+                    <td>
+                        <b>Court:</b> {{ i.CASE.court_name }}<br>
+                        <b>Judge:</b> {{ i.CASE.judge_assigned }}<br>
+                        <b>Priority:</b> {{ i.CASE.priority }}
+                    </td>
 
+                    <!-- Remarks -->
+                    <td>{{ i.CASE.remarks }}</td>
 
+                    <!-- Add Evidence -->
+                    <td>
+                        <div>
+                            <a href="/myapp/add_audiovisualevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Audio</a><br>
+                            <a href="/myapp/add_biologicalevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Bio</a><br>
+                            <a href="/myapp/add_chemicalevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Chemical</a><br>
+                            <a href="/myapp/add_digitalevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Digital</a><br>
+                            <a href="/myapp/add_documentevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Document</a><br>
+                            <a href="/myapp/add_financialaccountingevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Financial</a><br>
+                            <a href="/myapp/add_patternevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Pattern</a><br>
+                            <a href="/myapp/add_physicalevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Physical</a><br>
+                            <a href="/myapp/add_traceevidence_get/{{ i.CASE.id }}" class="btn btn-add btn-evidence">Trace</a>
+                        </div>
+                    </td>
 
-          <td>
-                <a href="/myapp/add_audiovisualevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_audio_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
+                    <!-- View Evidence -->
+                    <td>
+                        <div>
+                            <a href="/myapp/adminview_audio_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Audio</a><br>
+                            <a href="/myapp/adminview_biological_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Bio</a><br>
+                            <a href="/myapp/adminview_chemical_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Chemical</a><br>
+                            <a href="/myapp/adminview_digital_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Digital</a><br>
+                            <a href="/myapp/adminview_document_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Document</a><br>
+                            <a href="/myapp/adminview_financial_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Financial</a><br>
+                            <a href="/myapp/adminview_pattern_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Pattern</a><br>
+                            <a href="/myapp/adminview_physical_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Physical</a><br>
+                            <a href="/myapp/adminview_trace_evidence/{{ i.CASE.id }}" class="btn btn-view btn-evidence">Trace</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-            </td>
-            <td>
-                <a href="/myapp/add_biologicalevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_biological_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
+<!-- JS Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-            </td>
-            <td>
-                <a href="/myapp/add_chemicalevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_chemical_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-            <td>
-                <a href="/myapp/add_digitalevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_digital_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-            <td>
-                <a href="/myapp/add_documentevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_document_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-            <td>
-                <a href="/myapp/add_financialaccountingevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_financial_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-         <td>
-                <a href="/myapp/add_patternevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_pattern_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-            <td>
-                <a href="/myapp/add_physicalevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_physical_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-            <td>
-                <a href="/myapp/add_traceevidence_get/{{ i.CASE.id }}" class="btn btn-danger">ADD</a>
-                <a href="/myapp/view_trace_evidence/{{ i.CASE.id }}" class="btn btn-danger">VIEW</a>
-
-            </td>
-
-
-        </tr>
-               {% endfor %}
-
-        <!-- Add more rows dynamically from backend -->
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#registrationTable').DataTable();
+<script>
+$(document).ready(function() {
+    $('#casesTable').DataTable({
+        scrollX: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50],
+        ordering: true
     });
-  </script>
+});
+</script>
+
 </body>
 </html>

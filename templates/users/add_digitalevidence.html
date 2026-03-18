@@ -1,74 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>digital evidence</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Add Digital Evidence</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  font-family: 'Segoe UI', sans-serif;
+  color: #f1f5f9;
+  padding-top: 40px;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+  margin: auto;
+  color: #e2e8f0;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h4 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+label {
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+label::after {
+  content: " *";
+  color: #f87171;
+}
+
+.form-control {
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.4);
+  border-color: #38bdf8;
+}
+
+.btn-primary {
+  background-color: #38bdf8;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  color: #0f172a;
+}
+
+.btn-primary:hover {
+  background-color: #0ea5e9;
+  color: #ffffff;
+}
+</style>
+
 </head>
+
 <body>
-  <div class="container mt-5">
-    <h4 class="mb-4">Add Digital Evidence</h4>
-<form method="post" action="/myapp/add_digitalevidence_post/" enctype="multipart/form-data">
-        {% csrf_token %}
-     <input type="hidden" name="caseid" value="{{ id }}">
 
-      
+<div class="container">
+  <h4>Add Digital Evidence</h4>
 
-      <!-- Complaint Text -->
+  <form method="post" action="/myapp/add_digitalevidence_post/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="caseid" value="{{ id }}">
 
-      <div class="mb-3">
-          <div class="form-group">
-                        <label for="File name">File name</label>
-                        <input type="file" class="form-control" id="File name" name="File name" placeholder="" required accept="application/pdf">
-                    </div>
-        <label for="send" class="form-label">File Type</label>
-        <select class="form-control" id="" name="File Type" rows="4" placeholder="" required>
-            <option value="Mobile phones data">Mobile phones data</option>
-              <option value="Computer files">Computer files</option>
-              <option value="Emails">Emails</option>
-              <option value="Cctv footage">Cctv footage</option>
-              <option value="Call logs">Call logs</option>
-             <option value="Social media records">Social media records</option>
-              <option value="Cloud data">Cloud data</option>
+    <!-- File -->
+    <div class="mb-3">
+      <label>File</label>
+      <input type="file" class="form-control" name="file_name" required accept="application/pdf">
+    </div>
 
+    <!-- File Type -->
+    <div class="mb-3">
+      <label>File Type</label>
+      <select class="form-control" name="file_type" required>
+        <option value="Mobile phones data">Mobile phones data</option>
+        <option value="Computer files">Computer files</option>
+        <option value="Emails">Emails</option>
+        <option value="CCTV footage">CCTV footage</option>
+        <option value="Call logs">Call logs</option>
+        <option value="Social media records">Social media records</option>
+        <option value="Cloud data">Cloud data</option>
+      </select>
+    </div>
 
-        </select>
-      </div>
-      <div class="form-group">
-                        <label for="File size">File size</label>
-                        <input type="TEXT" class="form-control" id="File size" name="File size" placeholder="" required>
-                    </div>
-                     <div class="form-group">
-                        <label for="Hash value">Hash value</label>
-                        <input type="text" class="form-control" id="Hash value" name="Hash value" placeholder="" required>
-                    </div>
-         <div class="form-group">
-                        <label for="Collected source">Collected_source</label>
-                        <input type="text" class="form-control" id="Collected source" name="Collected source" placeholder="" required>
-                    </div>
-        <div class="form-group">
-                        <label for="Collected Time">Collected_Time</label>
-                        <input type="time" class="form-control" id="Collected Time" name="Collected Time" placeholder="" required>
-                    </div>
-        <div class="form-group">
-                        <label for="Preservation Time">Preservation_Time</label>
-                        <input type="time" class="form-control" id="Preservation Time" name="Preservation Time" placeholder="" required>
-                    </div>
+    <!-- File Size -->
+    <div class="mb-3">
+      <label>File Size</label>
+      <input type="text" class="form-control" name="file_size" required>
+    </div>
 
+    <!-- Hash -->
+    <div class="mb-3">
+      <label>Hash Value</label>
+      <input type="text" class="form-control" name="hash_value" required>
+    </div>
 
+    <!-- Source -->
+    <div class="mb-3">
+      <label>Collected Source</label>
+      <input type="text" class="form-control" name="collected_source" required>
+    </div>
 
+    <!-- Collected Time -->
+    <div class="mb-3">
+      <label>Collected Time</label>
+      <input type="time" class="form-control" name="collected_time" required>
+    </div>
 
+    <!-- Preservation Time -->
+    <div class="mb-3">
+      <label>Preservation Time</label>
+      <input type="time" class="form-control" name="preservation_time" required>
+    </div>
 
+    <!-- Submit -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 
+  </form>
+</div>
 
-      <!-- Optional File Upload -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-      <!-- Submit Button -->
-         <button type="submit" class="btn btn-primary">Submit</button>
-
-    </form>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
