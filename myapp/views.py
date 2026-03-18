@@ -87,19 +87,33 @@ def viewcomplaint_get(request):
     return render(request,'admins/viewcomplaint.html',{'data':data})
 
 
+# def sentreply_get(request,id):
+#     data = Complaint.objects.get(id=id)
+#     return render(request,'admins/sentreply.html',{'id':id})
+# def sentreply_post(request):
+#     print("POST hit!")  # check console
+#     cid = request.POST['id']
+#     reply = request.POST['reply']
+#
+#     data = Complaint.objects.get(id=cid)
+#     data.reply = reply
+#     data.status = "replied"
+#     data.save()
+#
+#     return redirect("/myapp/viewcomplaint_get/")
 def sentreply_get(request,id):
-    data = Complaint.objects.get(id=id)
-    return render(request,'admins/sentreply.html',{'data':data})
+    return render(request,'admins/sentreply.html',{'id':id})
+
 def sentreply_post(request):
-    cid = request.POST['id']
-    reply = request.POST['reply']
+    reply=request.POST["reply"]
+    id=request.POST["id"]
 
-    data = Complaint.objects.get(id=cid)
-    data.reply = reply
-    data.status = "replied"
+    data=Complaint.objects.get(id=id)
+    data.reply=reply
+    data.status="Replied"
     data.save()
-
     return redirect("/myapp/viewcomplaint_get/")
+
 
 
 
