@@ -16,13 +16,17 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            padding-top: 70px; /* prevent navbar overlap */
+            margin: 0;
+            padding: 0;
             background-color: #f4f7fc;
         }
 
-        /* Navbar */
+        /* Navbar (transparent over hero) */
         .navbar {
-            background-color: #1a1a1a;
+            background: transparent;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
         }
 
         .navbar-brand {
@@ -31,7 +35,7 @@
         }
 
         .nav-link {
-            color: #ccc !important;
+            color: #ddd !important;
             font-size: 15px;
         }
 
@@ -39,15 +43,17 @@
             color: #fff !important;
         }
 
-        /* Hero Section (ONLY homepage) */
+        /* HERO FULL SCREEN */
         .hero {
-            height: 80vh;
+            height: 100vh; /* FULL SCREEN */
             background-image: url("{% static 'admin/img/admin.jpg' %}");
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             position: relative;
         }
 
+        /* Dark overlay */
         .hero::after {
             content: "";
             position: absolute;
@@ -106,8 +112,8 @@
 
 <body>
 
-<!-- ✅ NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/myapp/adminhome_get/">Evidence Preservation System</a>
 
@@ -153,10 +159,9 @@
     </div>
 </nav>
 
-<!-- ✅ MAIN CONTENT BLOCK -->
+<!-- MAIN CONTENT -->
 {% block body %}
 
-<!-- ✅ HERO ONLY FOR HOME PAGE -->
 <div class="hero">
     <div class="hero-content">
         <h1>Digital Evidence Management System</h1>

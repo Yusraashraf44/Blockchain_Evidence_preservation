@@ -450,8 +450,9 @@ def adminview_biological_evidence(request,id):
     ids = contract.functions.getAllBiologicalevidenceIds().call()
     for evidence_id in ids:
         file_name, evidence_type,source,collection_location,collected_date,collected_time,lab_referenceid,narration,caseid = contract.functions.getBiologicalevidence(evidence_id).call()
-        # if str(caseid) == str(id):
-        biological_list.append({
+        if str(caseid) == str(id):
+
+            biological_list.append({
 
 
             "id": evidence_id,
@@ -713,13 +714,13 @@ def add_audiovisualevidence_get(request,id):
     return render(request,'users/add_audiovisualevidence.html',{'id':id})
 
 def add_audiovisualevidence_post(request):
-    file=request.FILES["File name"]
-    media_type= request.POST["media Type"]
+    file=request.FILES["file_name"]
+    media_type= request.POST["media_type"]
     duration_seconds= request.POST["duration_seconds"]
     format = request.POST["format"]
-    collected_from = request.POST["Collected from"]
-    collected_at = request.POST["Collected at"]
-    file_hash = request.POST["file hash"]
+    collected_from = request.POST["collected_from"]
+    collected_at = request.POST["collected_at"]
+    file_hash = request.POST["file_hash"]
     caseid = request.POST["caseid"]
 
     if media_type == 'Audio recordings':
@@ -754,18 +755,18 @@ def add_audiovisualevidence_post(request):
 def add_biologicalevidence_get(request,id):
     return render(request,'users/add_biologicalevidence.html',{'id':id})
 def add_biologicalevidence_post(request):
-    file = request.FILES["File name"]
-    evidence_type=request.POST["evidence"]
-    source = request.POST["Source"]
-    collection_location=request.POST["Collection Location"]
-    collected_date=request.POST["Collected Date"]
-    collected_time=request.POST["Collected Time"]
-    lab_referenceid=request.POST["Lab refernce id"]
+    file = request.FILES["file_name"]
+    evidence_type=request.POST["evidence_type"]
+    source = request.POST["source"]
+    collection_location=request.POST["collection_location"]
+    collected_date=request.POST["collected_date"]
+    collected_time=request.POST["collected_time"]
+    lab_referenceid=request.POST["lab_referenceid"]
     narration=request.POST["narration"]
     caseid=request.POST["caseid"]
 
     fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
     fs.save(date, file)
     file_name = fs.url(date)
 
@@ -784,17 +785,17 @@ def add_biologicalevidence_post(request):
 def add_chemicalevidence_get(request,id):
     return render(request,'users/add_chemicalevidence.html',{'id':id})
 def add_chemicalevidence_post(request):
-    file = request.FILES["File name"]
-    substance_type = request.POST["Substance Type"]
+    file = request.FILES["file_name"]
+    substance_type = request.POST["substance_type"]
     quantity = request.POST["quantity"]
-    collected_from = request.POST["Collected from"]
-    collected_at = request.POST["Collected at"]
-    lab_refernceid = request.POST["lab_reference_id"]
-    digital_hash = request.POST["digital hash"]
+    collected_from = request.POST["collected_from"]
+    collected_at = request.POST["collected_at"]
+    lab_refernceid = request.POST["lab_referenceid"]
+    digital_hash = request.POST["digital_hash"]
     caseid = request.POST["caseid"]
 
     fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
     fs.save(date, file)
     file_name = fs.url(date)
 
@@ -814,13 +815,13 @@ def add_chemicalevidence_post(request):
 def add_digitalevidence_get(request,id):
     return render(request,'users/add_digitalevidence.html',{'id':id})
 def add_digitalevidence_post(request):
-    file = request.FILES["File name"]
-    file_type = request.POST["File Type"]
-    file_size = request.POST["File size"]
-    hash_value = request.POST["Hash value"]
-    collected_source = request.POST["Collected source"]
-    collected_time = request.POST["Collected Time"]
-    preservation_time = request.POST["Preservation Time"]
+    file = request.FILES["file_name"]
+    file_type = request.POST["file_type"]
+    file_size = request.POST["file_size"]
+    hash_value = request.POST["hash_value"]
+    collected_source = request.POST["collected_source"]
+    collected_time = request.POST["collected_time"]
+    preservation_time = request.POST["preservation_time"]
     caseid = request.POST["caseid"]
 
 
@@ -854,17 +855,17 @@ def add_digitalevidence_post(request):
 def add_documentevidence_get(request,id):
     return render(request,'users/add_documentevidence.html',{'id':id})
 def add_documentevidence_post(request):
-    file = request.FILES["File name"]
-    document_type = request.POST["Document Type"]
-    title = request.POST["Title"]
-    pages = request.POST["Pages"]
-    collected_from = request.POST["Collected from"]
-    collected_at = request.POST["Collected at"]
-    file_hash = request.POST["file hash"]
+    file = request.FILES["file_name"]
+    document_type = request.POST["document_type"]
+    title = request.POST["title"]
+    pages = request.POST["pages"]
+    collected_from = request.POST["collected_from"]
+    collected_at = request.POST["collected_at"]
+    file_hash = request.POST["file_hash"]
     caseid = request.POST["caseid"]
 
     fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
     fs.save(date, file)
     file_name = fs.url(date)
 
@@ -883,17 +884,17 @@ def add_documentevidence_post(request):
 def add_financialaccountingevidence_get(request,id):
     return render(request,'users/add_financialaccountingevidence.html',{'id':id})
 def add_financialaccountingevidence_post(request):
-    file = request.FILES["File name"]
-    transaction_type = request.POST["Transaction Type"]
+    file = request.FILES["file_name"]
+    transaction_type = request.POST["transaction_type"]
     reference_number = request.POST["reference_number"]
     amount = request.POST["amount"]
-    collected_from = request.POST["Collected from"]
-    collected_at = request.POST["Collected at"]
-    digital_hash = request.POST["digital hash"]
+    collected_from = request.POST["collected_from"]
+    collected_at = request.POST["collected_at"]
+    digital_hash = request.POST["digital_hash"]
     caseid = request.POST["caseid"]
 
     fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
     fs.save(date, file)
     file_name = fs.url(date)
 
@@ -912,16 +913,16 @@ def add_financialaccountingevidence_post(request):
 def add_patternevidence_get(request,id):
     return render(request,'users/add_patternevidence.html',{'id':id})
 def add_patternevidence_post(request):
-    file = request.FILES["File name"]
-    pattern_type = request.POST["Pattern Type"]
-    capture_method = request.POST["capture method"]
-    collected_from = request.POST["Collected from"]
-    collected_at = request.POST["Collected at"]
-    file_hash = request.POST["file hash"]
+    file = request.FILES["file_name"]
+    pattern_type = request.POST["pattern_type"]
+    capture_method = request.POST["capture_method"]
+    collected_from = request.POST["collected_from"]
+    collected_at = request.POST["collected_at"]
+    file_hash = request.POST["file_hash"]
     caseid = request.POST["caseid"]
 
     fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
     fs.save(date, file)
     file_name = fs.url(date)
 
@@ -940,18 +941,18 @@ def add_patternevidence_post(request):
 def add_physicalevidence_get(request,id):
     return render(request,'users/add_physicalevidence.html',{'id':id})
 def add_physicalevidence_post(request):
-    file = request.FILES["File name"]
-    evidence_type = request.POST["evidencetype"]
-    description = request.POST["Description"]
-    collection_location = request.POST["Collection Location"]
-    collected_date = request.POST["Collected Date"]
-    collected_time = request.POST["Collected Time"]
-    digital_hash = request.POST["Digital Hash"]
+    file = request.FILES["file_name"]
+    evidence_type = request.POST["evidence_type"]
+    description = request.POST["description"]
+    collection_location = request.POST["collection_location"]
+    collected_date = request.POST["collected_date"]
+    collected_time = request.POST["collected_time"]
+    digital_hash = request.POST["digital_hash"]
     caseid = request.POST["caseid"]
 
 
     fs=FileSystemStorage()
-    date=datetime.datetime.now().strftime('%d%M%Y%H%M%S')+'.jpg'
+    date=datetime.datetime.now().strftime('%d%M%Y%H%M%S')+'.pdf'
     fs.save(date,file)
     file_name=fs.url(date)
 
@@ -971,17 +972,17 @@ def add_physicalevidence_post(request):
 def add_traceevidence_get(request,id):
     return render(request,'users/add_traceevidence.html',{'id':id})
 def add_traceevidence_post(request):
-    file = request.FILES["File name"]
-    trace_type = request.POST["Trace Type"]
-    description = request.POST["Description"]
-    collected_from = request.POST["Collected from"]
-    collected_at = request.POST["Collected at"]
-    storage_location = request.POST["storage location"]
-    digital_hash = request.POST["digital hash"]
+    file = request.FILES["file_name"]
+    trace_type = request.POST["trace_type"]
+    description = request.POST["description"]
+    collected_from = request.POST["collected_from"]
+    collected_at = request.POST["collected_at"]
+    storage_location = request.POST["storage_location"]
+    digital_hash = request.POST["digital_hash"]
     caseid = request.POST["caseid"]
 
     fs = FileSystemStorage()
-    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.jpg'
+    date = datetime.datetime.now().strftime('%d%M%Y%H%M%S') + '.pdf'
     fs.save(date, file)
     file_name = fs.url(date)
 
@@ -1043,7 +1044,7 @@ def view_chemical_evidence(request,id):
 
     ids = contract.functions.getAllChemicalevidenceIds().call()
     for evidence_id in ids:
-        file_name, substance_type,quantity,collected_from,collected_at,lab_refernceid,digital_hash,caseid = contract.functions.getChemicalevidence(evidence_id).call()
+        file_name, substance_type,quantity,collected_from,collected_at,lab_referenceid,digital_hash,caseid = contract.functions.getChemicalevidence(evidence_id).call()
         if str(caseid) == str(id):
             chemical_list.append({
 
@@ -1053,7 +1054,7 @@ def view_chemical_evidence(request,id):
             "quantity": quantity,
             "collected_from": collected_from,
             "collected_at": collected_at,
-            "lab_refernceid": lab_refernceid,
+            "lab_referenceid": lab_referenceid,
             "digital_hash": digital_hash
 
         })

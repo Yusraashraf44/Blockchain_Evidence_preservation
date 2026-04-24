@@ -16,15 +16,18 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #f4f7fc;
-            padding-top: 80px;
         }
 
-        /* Navbar */
+        /* NAVBAR (transparent over hero) */
         .navbar {
-            background: linear-gradient(90deg, #0a192f, #112240);
-            padding: 12px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: transparent;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            padding: 15px 0;
         }
 
         .navbar-brand {
@@ -34,10 +37,9 @@
         }
 
         .nav-link {
-            color: #cbd5e1 !important;
+            color: #e2e8f0 !important;
             font-size: 15px;
             margin-left: 15px;
-            transition: 0.3s;
         }
 
         .nav-link:hover {
@@ -55,7 +57,6 @@
         .dropdown-item {
             border-radius: 8px;
             padding: 8px 12px;
-            transition: 0.3s;
         }
 
         .dropdown-item:hover {
@@ -63,9 +64,9 @@
             color: white;
         }
 
-        /* Hero Section */
+        /* HERO FULL SCREEN */
         .hero-section {
-            height: 80vh;
+            height: 100vh; /* FULL SCREEN */
             background: url("{% static 'HighTech/img/user.jpg' %}") no-repeat center center;
             background-size: cover;
             position: relative;
@@ -74,11 +75,14 @@
             justify-content: center;
         }
 
+        /* Overlay */
         .hero-overlay {
             position: absolute;
             width: 100%;
             height: 100%;
             background: rgba(10, 25, 47, 0.75);
+            top: 0;
+            left: 0;
         }
 
         .hero-content {
@@ -105,7 +109,6 @@
             border-radius: 30px;
             margin-top: 20px;
             border: none;
-            transition: 0.3s;
         }
 
         .btn-custom:hover {
@@ -123,8 +126,8 @@
 
 <body>
 
-<!-- ✅ NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="/myapp/userindex_get/">Evidence Preservation</a>
@@ -149,13 +152,11 @@
                     <a class="nav-link" href="/myapp/viewassigncase_post/">Cases</a>
                 </li>
 
-                <!-- ✅ FIXED DROPDOWN -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="complaintDropdown"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         Complaints
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="complaintDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="/myapp/sentcomplaint_get/">Sent Complaint</a>
                         </li>
@@ -178,7 +179,7 @@
     </div>
 </nav>
 
-<!-- ✅ PAGE CONTENT -->
+<!-- CONTENT -->
 {% block body %}
 
 <!-- HERO -->
@@ -206,7 +207,7 @@
 
 {% endblock %}
 
-<!-- JS (IMPORTANT for dropdown) -->
+<!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
