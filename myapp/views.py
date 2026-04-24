@@ -1,18 +1,23 @@
 import datetime
+import smtplib
 from email import message
+from filecmp import clear_cache
 from unittest import case
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
+
 
 
 # Create your views here.
 from myapp.blockchain import contract, w3
 from myapp.models import Complaint, Users, Case, Assigncase
-
+@never_cache
 def login_get(request):
     return render(request,'login1.html')
 def login_post(request):
@@ -40,26 +45,55 @@ def logout_get(request):
     return redirect('/myapp/login_get/')
 def forgotpassword_get(request):
     return render(request,'forgotpassword.html')
+
 def forgotpassword_post(request):
-    return
+
+
+    email=request.POST['email']
+
+    if User.objects.filter(username=email).exists():
+
+        import random
+        new_pass = random.randint(00000, 99999)
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login("leagaladvisorteam@gmail.com", " eugnxtyylwtqwlav")  # App Password
+        to = email
+        subject = "Test Email"
+        body = "Your new password is " + str(new_pass)
+        msg = f"Subject: {subject}\n\n{body}"
+        server.sendmail("s@gmail.com", to, msg)  # Disconnect from the server
+        server.quit()
+
+        user = User.objects.get(username=email)
+        user.set_password(str(new_pass))
+        user.save()
+
+        return redirect('/myapp/login_get/')
+    else:
+        messages.warning(request, 'email not  exists')
+        return redirect('/myapp/forgotpassword_get/')
 
 
 
 
 # A D M I N ---------
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def adminhome_get(request):
     return render(request,'admins/adminhomeindex.html')
 
 # def loginindex
 
-
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def viewevidence_get(request):
     # a=Evidence.objects.all()
     return render(request,'admins/viewevidence.html')
 
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def changepassword_get(request):
     return render(request,'admins/changepassword.html')
 
@@ -81,6 +115,8 @@ def changepassword_post(request):
     data.save()
     return redirect('/myapp/login_get/')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def viewcomplaint_get(request):
     data=Complaint.objects.all()
     return render(request,'admins/viewcomplaint.html',{'data':data})
@@ -100,6 +136,9 @@ def viewcomplaint_get(request):
 #     data.save()
 #
 #     return redirect("/myapp/viewcomplaint_get/")
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def sentreply_get(request,id):
     return render(request,'admins/sentreply.html',{'id':id})
 
@@ -116,7 +155,8 @@ def sentreply_post(request):
 
 
 
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def addstaff_get(request):
     return render(request,'admins/addstaff.html')
 def addstaff_post(request):
@@ -148,11 +188,14 @@ def addstaff_post(request):
 
     return redirect('/myapp/viewuser_get/')
 
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def viewuser_get(request):
     users=Users.objects.all()
     return render(request,'admins/viewuser.html',{'data':users})
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def editstaff_get(request,id):
     a=Users.objects.get(id=id)
     return render(request, 'admins/editstaff.html',{'d':a})
@@ -191,11 +234,15 @@ def editstaff_post(request):
 
     return redirect('/myapp/viewuser_get/')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def deletestaff_get(request,id):
     Users.objects.get(AUTHUSER_id=id).delete()
     User.objects.get(id=id).delete()
     return redirect('/myapp/viewuser_get/')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def addcase_get(request):
     return render(request, 'admins/addcase.html')
 def addcase_post(request):
@@ -246,10 +293,14 @@ def addcase_post(request):
     return redirect('/myapp/viewcase_get/')
 
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def viewcase_get(request):
     cases=Case.objects.all()
     return render(request,'admins/viewcase.html',{'data':cases})
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def editcase_get(request,id):
     f=Case.objects.get(id=id)
     return render(request, 'admins/editcase.html',{'d':f})
@@ -303,11 +354,15 @@ def editcase_post(request):
 
     return redirect('/myapp/viewcase_get/')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def deletecase_get(request,id):
     Case.objects.get(id=id).delete()
 
     return redirect('/myapp/viewcase_get/')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def assigncase_get(request):
     staff=Users.objects.all()
     case=Case.objects.all()
@@ -332,6 +387,8 @@ def viewassignedcase_post(request):
     data=Assigncase.objects.all()
     return render(request,'admins/viewassignedcases.html',{'data':data})
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def editassigncase_get(request,id):
     f=Assigncase.objects.get(id=id)
     staff = Users.objects.all()
@@ -353,6 +410,9 @@ def editassigncase_post(request):
 
     return redirect('/myapp/viewassignedcase_post/')
 
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def deleteassignedcase_get(request,id):
     Assigncase.objects.get(id=id).delete()
 
@@ -570,7 +630,8 @@ def viewassigncase_post(request):
 
 
 
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def userindex_get(request):
     return render(request,'users/userindex.html')
 def edit_get(request):
@@ -579,6 +640,8 @@ def edit_get(request):
 def edit_post(request):
     return render(request,'users/edit.html')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def userchangepassword_get(request):
     return render(request,'users/userchangepassword.html')
 
@@ -609,7 +672,8 @@ def register_get(request):
 def register_post(request):
     return render(request,'users/register.html')
 
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def sentcomplaint_get(request):
 
     return render(request,'users/sentcomplaint.html')
@@ -631,17 +695,20 @@ def sentcomplaint_post(request):
 
 # def user_viewcomplaint_get(request):
 #     return render(request,'users/viewcomplaint.html')
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def viewreply_get(request):
     a=Complaint.objects.filter(USER__AUTHUSER=request.user)
     return render(request,'users/viewreply.html',{'data':a})
 
 
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def viewprofile_get(request):
     data=Users.objects.get(AUTHUSER_id=request.user.id)
     return render(request,'users/viewprofile.html',{'data':data})
-
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def add_audiovisualevidence_get(request,id):
     return render(request,'users/add_audiovisualevidence.html',{'id':id})
 
@@ -681,6 +748,9 @@ def add_audiovisualevidence_post(request):
 
     return render(request,'users/add_audiovisualevidence.html')
 
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 def add_biologicalevidence_get(request,id):
     return render(request,'users/add_biologicalevidence.html',{'id':id})
 def add_biologicalevidence_post(request):
@@ -708,6 +778,9 @@ def add_biologicalevidence_post(request):
 
     return render(request,'users/add_biologicalevidence.html')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
+
 def add_chemicalevidence_get(request,id):
     return render(request,'users/add_chemicalevidence.html',{'id':id})
 def add_chemicalevidence_post(request):
@@ -734,6 +807,9 @@ def add_chemicalevidence_post(request):
 
 
     return render(request,'users/add_chemicalevidence.html')
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 
 def add_digitalevidence_get(request,id):
     return render(request,'users/add_digitalevidence.html',{'id':id})
@@ -772,6 +848,9 @@ def add_digitalevidence_post(request):
 
     return render(request,'users/add_digitalevidence.html')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
+
 def add_documentevidence_get(request,id):
     return render(request,'users/add_documentevidence.html',{'id':id})
 def add_documentevidence_post(request):
@@ -797,6 +876,9 @@ def add_documentevidence_post(request):
         message = "Error: " + str(e)
 
     return render(request,'users/add_documentevidence.html')
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 
 def add_financialaccountingevidence_get(request,id):
     return render(request,'users/add_financialaccountingevidence.html',{'id':id})
@@ -824,6 +906,9 @@ def add_financialaccountingevidence_post(request):
 
     return render(request,'users/add_financialaccountingevidence.html')
 
+@never_cache
+@login_required(login_url='/myapp/login_get/')
+
 def add_patternevidence_get(request,id):
     return render(request,'users/add_patternevidence.html',{'id':id})
 def add_patternevidence_post(request):
@@ -848,6 +933,9 @@ def add_patternevidence_post(request):
         message = "Error: " + str(e)
 
     return render(request,'users/add_patternevidence.html')
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 
 def add_physicalevidence_get(request,id):
     return render(request,'users/add_physicalevidence.html',{'id':id})
@@ -876,6 +964,9 @@ def add_physicalevidence_post(request):
         message = "Error: " + str(e)
 
     return render(request,'users/add_physicalevidence.html')
+
+@never_cache
+@login_required(login_url='/myapp/login_get/')
 
 def add_traceevidence_get(request,id):
     return render(request,'users/add_traceevidence.html',{'id':id})

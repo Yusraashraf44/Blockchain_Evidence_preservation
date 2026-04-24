@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Evidence Preservation - Login</title>
+    <title>Secure Evidence System - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -22,163 +21,115 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)),
-                        url('https://www.transparenttextures.com/patterns/grey-wash-wall.png');
-            background-color: #cce7ff; /* Light Blue */
-            background-repeat: repeat;
-            color: #333;
+            background: url("{% static 'login/img/loggoo.jpg' %}") no-repeat center center/cover;
         }
 
-        .login-wrapper {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            display: flex;
-            max-width: 900px;
-            width: 90%;
-            overflow: hidden;
-        }
-
-        .col-left, .col-right {
-            flex: 1;
+        /* Glass Login Box */
+        .login-box {
+            width: 380px;
             padding: 40px;
-        }
-
-        /* Left Column */
-        .col-left {
-            background-color: #5dade2; /* Light Blue accent */
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.55);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
             color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
 
-        .col-left h2 {
-            font-size: 32px;
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .login-box p {
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+
+        .input-box {
             margin-bottom: 15px;
         }
 
-        .col-left p {
-            font-size: 16px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .col-left .btn {
-            text-decoration: none;
-            padding: 12px 30px;
-            background-color: #2e86c1; /* Darker blue for button */
-            color: #fff;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: background 0.3s ease;
-        }
-
-        .col-left .btn:hover {
-            background-color: #1b4f72;
-        }
-
-        /* Right Column */
-        .col-right h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #1b262c;
-        }
-
-        .login-form label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-
-        .login-form input[type="text"],
-        .login-form input[type="password"] {
+        .input-box input {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-            transition: border-color 0.3s ease;
-        }
-
-        .login-form input[type="text"]:focus,
-        .login-form input[type="password"]:focus {
-            border-color: #5dade2;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
             outline: none;
         }
 
-        .login-form input[type="submit"] {
+        .btn {
             width: 100%;
             padding: 12px;
-            background-color: #5dade2;
-            color: #fff;
+            background: #ff9800;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 5px;
+            color: white;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
-        .login-form input[type="submit"]:hover {
-            background-color: #2e86c1;
+        .btn:hover {
+            background: #e68900;
         }
 
-        .login-form a {
-            display: block;
-            margin-top: 12px;
-            font-size: 14px;
-            color: #5dade2;
+        .forgot {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .forgot a {
+            color: #ffcc80;
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
-        .login-form a:hover {
-            color: #2e86c1;
+        .error {
+            color: #ff8080;
+            text-align: center;
+            margin-top: 10px;
         }
 
-        @media(max-width: 768px) {
-            .login-wrapper {
-                flex-direction: column;
-            }
-            .col-left, .col-right {
-                padding: 30px 20px;
-            }
+        .security-text {
+            font-size: 11px;
+            text-align: center;
+            margin-top: 15px;
+            color: #ccc;
         }
     </style>
 </head>
 
 <body>
 
-<div class="login-wrapper">
-    <!-- Left column -->
-    <div class="col-left">
-        <h2>Welcome Back</h2>
-        <p>Securely access your Evidence Preservation account.</p>
+<div class="login-box">
+    <h2>Digital Evidence System</h2>
+    <p>Secure Login Portal</p>
 
-    </div>
+    <form method="post" action="/myapp/login_post/">
+        {% csrf_token %}
+        <div class="input-box">
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
 
-    <!-- Right column -->
-    <div class="col-right">
-        <h2>Login</h2>
-        <form method="post" action="/myapp/login_post/" class="login-form">
-            {% csrf_token %}
-            <label>Username or Email <span>*</span></label>
-            <input type="text" name="username" placeholder="Username or Email" required>
-
-            <label>Password <span>*</span></label>
+        <div class="input-box">
             <input type="password" name="password" placeholder="Password" required>
+        </div>
 
-            <input type="submit" value="Sign In">
+        <input type="submit" value="Login" class="btn">
 
-            <a href="/myapp/forgotpassword_post/">Forgot Password?</a>
-        </form>
-        {% for i in messages %}
-            <div style="margin-top:10px;color:red;">{{ i }}</div>
-        {% endfor %}
-    </div>
+        <div class="forgot">
+            <a href="/myapp/forgotpassword_get/">Forgot Password?</a>
+        </div>
+    </form>
+
+    <p class="security-text">
+        Unauthorized access is prohibited.
+    </p>
+
+    {% for i in messages %}
+        <div class="error">{{ i }}</div>
+    {% endfor %}
 </div>
 
 </body>

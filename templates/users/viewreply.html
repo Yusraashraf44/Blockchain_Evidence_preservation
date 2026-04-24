@@ -42,7 +42,7 @@
           <!-- Sample Data Rows -->
           {% for i in data %}
           <tr>
-            <td>{{ forloopcounter }}</td>
+            <td>{{ forloop.counter }}</td>
             <td>{{ i.date }}</td>
             <td>{{ i.sendcomplaint }}</td>
             <td>{{ i.status }}</td>
